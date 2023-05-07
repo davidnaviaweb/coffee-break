@@ -10,6 +10,8 @@ class Machine extends Model
 {
     use HasFactory;
 
+    protected $perPage = 10;
+
     protected function name(): Attribute
     {
         return new Attribute(

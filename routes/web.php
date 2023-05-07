@@ -23,15 +23,14 @@ Route::middleware('auth')->controller(ProfileController::class)->group(function 
 
 # Machines
 Route::middleware('auth')->controller(MachineController::class)->group(function () {
-    Route::get('/machines', 'list')->name('machines.index');
-    Route::post('/machines', 'create')->name('machines.store');
-    // Route::get('/machines/{machine_id}', 'edit')->name('machines.edit');
-    
-    // Route::patch('/machines/{machine_id}', 'update')->name('machines.update');
+    Route::get('/machines', 'index')->name('machines.index');
+    Route::post('/machines', 'store')->name('machines.store');
+    Route::get('/machines/{machine}', 'edit')->name('machines.edit');
+    Route::put('/machines/{machine}', 'update')->name('machines.update');
     // Route::delete('/machines/{machine_id}', 'destroy')->name('machines.destroy');
 });
 
-/* 
+/*
 Route::resource('machines', UserController::class)
     ->only(['index', 'store'])
     ->middleware('auth'); */
