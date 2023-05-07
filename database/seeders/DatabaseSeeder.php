@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Location;
 use App\Models\Machine;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Hashing\BcryptHasher;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('demodemo')
         ]);
 
+        Location::factory(5)->create();
         Machine::factory(5)->create();
     }
 }
