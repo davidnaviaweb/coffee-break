@@ -34,12 +34,7 @@ After downloading the project, follow the next steps:
    `composer install --dev`
 
 
-2. Generate the unique key of the project:
-
-   `php artisan key:generate`
-
-
-3. Using the file located in the root of the project `.env.example` as a template, create the `.env` file, and modify it
+2. Using the file located in the root of the project `.env.example` as a template, create the `.env` file, and modify it
    according to the configuration of your development environment.
 
 The most important sections to review are:
@@ -49,6 +44,11 @@ The most important sections to review are:
 - The database configuration: type, host, name, user and password. **NOTE: Do not forget to create the database**
 - Change the `FILESYSTEM_DISK` to `public`
 - Change `MAIL_HOST` to `localhost` (check [Mail](https://github.com/davidnaviaweb/coffee-break#mail) section below)
+
+
+3. Generate the unique key of the project:
+
+   `php artisan key:generate`
 
 Then, to follow up the installation of the project, the necessary commands have to be executed to populate the database with
 test data and compile the necessary assets:
