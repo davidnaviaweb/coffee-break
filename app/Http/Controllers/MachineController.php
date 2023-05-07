@@ -10,7 +10,7 @@ use Illuminate\View\View;
 class MachineController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Display the machine's index.
      */
     public function index(Request $request): View
     {
@@ -20,7 +20,7 @@ class MachineController extends Controller
     }
 
     /**
-     * Display the user's profile form.
+     * Display the machine's edit form.
      */
     public function edit(Request $request, Machine $machine): View
     {
@@ -28,22 +28,32 @@ class MachineController extends Controller
     }
 
     /**
-     * Display the user's profile form.
+     * Create a new machine.
      */
-    public function store(StoreMachine $request): View
+    public function store(StoreMachine $request)
     {
-        $machine = Machine::create($request->all());
+        Machine::create($request->all());
 
-        return self::index($request);
+        return redirect(route('machines.index'));
     }
 
     /**
-     * Display the user's profile form.
+     * Update a machine.
      */
     public function update(StoreMachine $request, Machine $machine): View
     {
         $machine->update($request->all());
 
         return view('machines.edit', compact('machine'));
+    }
+
+    /**
+     * Delete a machine.
+     */
+    public function destroy(Machine $machine)
+    {
+        $machine->delete();
+
+        return redirect(route('machines.index'));
     }
 }

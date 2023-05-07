@@ -25,6 +25,11 @@
                     <x-primary-button class="mt-4">{{ __('Update') }}</x-primary-button>
                 </form>
             </div>
+            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('machines.partials.delete-machine-form')
+                </div>
+            </div>
         </div>
     </div>
 </x-app-layout>

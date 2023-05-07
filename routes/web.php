@@ -27,13 +27,7 @@ Route::middleware('auth')->controller(MachineController::class)->group(function 
     Route::post('/machines', 'store')->name('machines.store');
     Route::get('/machines/{machine}', 'edit')->name('machines.edit');
     Route::put('/machines/{machine}', 'update')->name('machines.update');
-    // Route::delete('/machines/{machine_id}', 'destroy')->name('machines.destroy');
+    Route::delete('/machines/{machine}', 'destroy')->name('machines.destroy');
 });
-
-/*
-Route::resource('machines', UserController::class)
-    ->only(['index', 'store'])
-    ->middleware('auth'); */
-
 
 require __DIR__ . '/auth.php';

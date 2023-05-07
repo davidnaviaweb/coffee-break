@@ -12,7 +12,7 @@
                     {{$machine->description}}
                 </td>
                 <td>
-                    <a href="{{route('machines.edit',$machine->id)}}">
+                    <a href="{{route('machines.edit',$machine)}}">
                         {{__('Edit')}}
                     </a>
                 </td>
