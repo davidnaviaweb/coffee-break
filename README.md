@@ -31,7 +31,7 @@ After downloading the project, follow the next steps:
 
 1. Install the dependencies via `composer`:
 
-   `composer install --dev` command
+   `composer install --dev`
 
 
 2. Generate the unique key of the project:
@@ -42,7 +42,7 @@ After downloading the project, follow the next steps:
 3. Using the file located in the root of the project `.env.example` as a template, create the `.env` file, and modify it
    according to the configuration of your development environment.
 
-The most important sections are:
+The most important sections to review are:
 
 - The name of the application: *Coffee break*.
 - The application path: you can leave it as it is or configure a local Virtual Host.
