@@ -46,8 +46,9 @@ The most important sections to review are:
 
 - The name of the application: *Coffee break*.
 - The application path: you can leave it as it is or configure a local Virtual Host.
-- The database configuration: type, host, name, user and password.
-- In the **MAIL** section, change `MAIL_HOST` to `localhost` (check [Mail](https://github.com/davidnaviaweb/coffee-break#mail) section below)
+- The database configuration: type, host, name, user and password. **NOTE: Do not forget to create the database**
+- Change the `FILESYSTEM_DISK` to `public`
+- Change `MAIL_HOST` to `localhost` (check [Mail](https://github.com/davidnaviaweb/coffee-break#mail) section below)
 
 Then, to follow up the installation of the project, the necessary commands have to be executed to populate the database with
 test data and compile the necessary assets:
