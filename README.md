@@ -55,9 +55,11 @@ test data and compile the necessary assets:
 
 `php artisan migrate --seed`
 
+`php artisan storage:link`
+
 `npm install`
 
-`php artisan storage:link`
+`npm run build`
 
 Finally, if you have not set up a local Virtual Host, you can run the application with the command:
 
