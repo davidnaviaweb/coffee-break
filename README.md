@@ -12,11 +12,11 @@ subject "Computer Science Project" of the second year of the Degree in Computer 
 
 The project has been developed by:
 
-- [David Navia](https://github.com/davidnaviaweb).
-- [David Cachero](https://github.com/davidcachero).
+- [David Navia](https://github.com/davidnaviaweb)
+- [David Cachero](https://github.com/davidcachero)
 - [Jesús de Francisco Granda](https://github.com/ChusUEM)
-- [Víctor Álvarez](https://github.com/vicex99).
-- [José Luis Blázquez]().
+- [Víctor Álvarez](https://github.com/vicex99)
+- [José Luis Blázquez](#)
 
 ## Requirements:
 
