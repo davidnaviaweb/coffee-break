@@ -22,12 +22,7 @@ Route::middleware('auth')->controller(ProfileController::class)->group(function 
 });
 
 # Machines
-Route::middleware('auth')->controller(MachineController::class)->group(function () {
-    Route::get('/machines', 'index')->name('machines.index');
-    Route::post('/machines', 'store')->name('machines.store');
-    Route::get('/machines/{machine}', 'edit')->name('machines.edit');
-    Route::put('/machines/{machine}', 'update')->name('machines.update');
-    Route::delete('/machines/{machine}', 'destroy')->name('machines.destroy');
-});
+Route::resource('machines', MachineController::class);
+
 
 require __DIR__ . '/auth.php';
