@@ -49,18 +49,22 @@ The most important sections to review are:
 - The database configuration: type, host, name, user and password.
 - In the **MAIL** section, change `MAIL_HOST` to `localhost` (check [Mail](https://github.com/davidnaviaweb/coffee-break#mail) section below)
 
-Then, to end the installation of the project, the necessary commands have to be executed to populate the database with
+Then, to follow up the installation of the project, the necessary commands have to be executed to populate the database with
 test data and compile the necessary assets:
 
 `php artisan migrate --seed`
 
 `npm install`
 
-`npm run dev`
+`php artisan storage:link`
 
 Finally, if you have not set up a local Virtual Host, you can run the application with the command:
 
 `php artisan serve`
+
+Also, for live updating of the changes, start the Vite server with:
+
+`npm run dev`
 
 ## Contributing
 
