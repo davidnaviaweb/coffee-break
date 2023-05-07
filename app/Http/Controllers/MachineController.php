@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMachine;
 use App\Models\Machine;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -29,15 +30,8 @@ class MachineController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function store(Request $request): View
+    public function store(StoreMachine $request): View
     {
-        $request->validate(
-            [
-                'name' => 'required',
-                'description' => 'required',
-            ]
-        );
-
         $machine = new Machine();
         $machine->name = $request->post('name');
         $machine->description = $request->post('description');
@@ -49,15 +43,8 @@ class MachineController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function update(Request $request, Machine $machine): View
+    public function update(StoreMachine $request, Machine $machine): View
     {
-        $request->validate(
-            [
-                'name' => 'required',
-                'description' => 'required',
-            ]
-        );
-
         $machine->name = $request->name;
         $machine->description = $request->description;
         $machine->save();
