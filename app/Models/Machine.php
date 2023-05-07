@@ -10,6 +10,8 @@ class Machine extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description'];
+    protected $guarded = [];
     protected $perPage = 10;
 
     protected function name(): Attribute

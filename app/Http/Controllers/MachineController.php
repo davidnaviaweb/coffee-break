@@ -32,10 +32,7 @@ class MachineController extends Controller
      */
     public function store(StoreMachine $request): View
     {
-        $machine = new Machine();
-        $machine->name = $request->post('name');
-        $machine->description = $request->post('description');
-        $machine->save();
+        $machine = Machine::create($request->all());
 
         return self::index($request);
     }
@@ -45,9 +42,7 @@ class MachineController extends Controller
      */
     public function update(StoreMachine $request, Machine $machine): View
     {
-        $machine->name = $request->name;
-        $machine->description = $request->description;
-        $machine->save();
+        $machine->update($request->all());
 
         return view('machines.edit', compact('machine'));
     }
