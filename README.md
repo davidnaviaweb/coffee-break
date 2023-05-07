@@ -47,6 +47,7 @@ The most important sections to review are:
 - The name of the application: *Coffee break*.
 - The application path: you can leave it as it is or configure a local Virtual Host.
 - The database configuration: type, host, name, user and password.
+- In the **MAIL** section, change `MAIL_HOST` to `localhost` (check [Mail](https://github.com/davidnaviaweb/coffee-break#mail) section below)
 
 Then, to end the installation of the project, the necessary commands have to be executed to populate the database with
 test data and compile the necessary assets:
@@ -65,4 +66,10 @@ Finally, if you have not set up a local Virtual Host, you can run the applicatio
 
 Please follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) guidelines when contributing.
 Thank you
+
+## Mail
+
+The project uses [Mailpit](https://github.com/axllent/mailpit) to serve as mail fake server. Once installed and running,
+**Mailpit client** can be found in (http://localhost:8025)
+
 
