@@ -3,7 +3,8 @@
 <img src="https://raw.githubusercontent.com/davidnaviaweb/public/main/img/LogoCoffeeBreak.png" width="100" alt="Laravel Logo">
 </a>
 </p>
-## About Coffee Break
+
+# About Coffee Break
 
 Coffee Break is a Laravel-based project that serves as a backend for an application written in Java. This application is
 designed to manage the functionality of a beverage vending machine and is part of the project developed for the
