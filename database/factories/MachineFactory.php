@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Location;
 use App\Models\Machine;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,9 +20,12 @@ class MachineFactory extends Factory
      */
     public function definition(): array
     {
+        $locations = Location::all();
+
         return [
             'name' => fake()->word,
             'description' => fake()->sentence,
+            'location_id' => fake()->randomElement($locations)
         ];
     }
 

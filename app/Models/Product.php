@@ -14,6 +14,12 @@ class Product extends Model
     protected $guarded = [];
     protected $perPage = 10;
 
+    public function allergies()
+    {
+        return $this->belongsToMany(Allergy::class);
+    }
+
+    // Attributes
     protected function name(): Attribute
     {
         return new Attribute(

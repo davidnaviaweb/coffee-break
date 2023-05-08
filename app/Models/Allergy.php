@@ -32,7 +32,7 @@ class Allergy extends Model
             $filename = pathinfo($allergy)['filename'];
             $allergies[] = [
                 'name' => __(str_replace('-', ' ', substr($filename, strrpos($filename, '_') + 1))),
-                'icon' => url('/').substr($allergy, strlen(public_path())),
+                'image' => url('/').substr($allergy, strlen(public_path())),
             ];
         }
 

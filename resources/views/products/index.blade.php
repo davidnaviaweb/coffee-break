@@ -19,6 +19,13 @@
                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                            value="{{ old('price') }}"/>
                     <x-input-error :messages="$errors->get('price')" class="mt-2"/>
+                    <br>
+                    <select name="allergies[]" multiple
+                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                        @foreach($allergies as $allergy)
+                            <option value="{{$allergy->id}}">{{ $allergy->name }}</option>
+                        @endforeach
+                    </select>
                     <x-primary-button class="mt-4">{{ __('Create') }}</x-primary-button>
                 </form>
             </div>

@@ -23,6 +23,13 @@
                            value="{{ old('price',  $product->price) }}"
                            step="0.01"/>
                     <x-input-error :messages="$errors->get('price')" class="mt-2"/>
+                    <select name="allergies[]" multiple
+                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                        @foreach($allergies as $allergy)
+                            <option value="{{$allergy->id}}"
+                                    @if (in_array($allergy->id, $product->allergies)) selected @endif>{{ $allergy->name }}</option>
+                        @endforeach
+                    </select>
                     <x-primary-button class="mt-4">{{ __('Update') }}</x-primary-button>
                 </form>
             </div>
