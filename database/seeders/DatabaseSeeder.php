@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Location::factory(5)->create();
-        Machine::factory(5)->create();
+        Machine::factory(50)->create();
+
+        (new AllergySeeder)->run();
     }
 }
