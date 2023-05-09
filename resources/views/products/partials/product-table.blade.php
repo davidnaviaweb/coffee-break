@@ -1,23 +1,11 @@
 <x-slot name="header">
     <tr>
-        <th class="border-b dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200 text-left">
-            ID
-        </th>
-        <th class="border-b dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200 text-left">
-            Name
-        </th>
-        <th class="border-b dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200 text-center">
-            Price
-        </th>
-        <th class="border-b dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200 text-center">
-            Image
-        </th>
-        <th class="border-b dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200 text-center">
-            Allergies
-        </th>
-        <th class="border-b dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200 text-right">
-            Actions
-        </th>
+        @foreach(['ID' => 'left','Name'=>'left','Price' =>'center','Image' =>'center', 'Allergies' => 'center', 'Actions' => 'right'] as $label => $text_align)
+            <x-index-table-th>
+                <x-slot name="label">{{$label}}</x-slot>
+                <x-slot name="text_align">{{$text_align}}</x-slot>
+            </x-index-table-th>
+        @endforeach
     </tr>
 </x-slot>
 <x-slot name="body">

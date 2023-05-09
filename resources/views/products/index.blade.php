@@ -17,7 +17,8 @@
                     <br>
                     <input type="number" name="price" placeholder="{{ __('Product\'s price') }}"
                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                           value="{{ old('price') }}"/>
+                           value="{{ old('price') }}"
+                           step="0.01"/>
                     <x-input-error :messages="$errors->get('price')" class="mt-2"/>
                     <br>
                     <select name="allergies[]" multiple

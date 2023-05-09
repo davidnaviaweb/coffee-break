@@ -1,5 +1,5 @@
 <div>
-    <table class="tn abx acc text-gray-800 dark:text-gray-200">
+    <table class="table-auto text-gray-800 dark:text-gray-200">
         @foreach($locations as $location)
             <tr>
                 <td>

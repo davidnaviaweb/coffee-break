@@ -5,7 +5,6 @@
         </thead>
         <tbody>
         {{$body}}
-        <x-slot name="body"></x-slot>
         </tbody>
     </table>
 </div>
