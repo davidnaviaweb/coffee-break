@@ -15,11 +15,7 @@ class ProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $products = Product::paginate();
-//
-//        foreach ($products as $product) {
-//            $product->allergies = $this->getAllergiesIds($product);
-//        }
+        $products = Product::orderBy('updated_at', 'desc')->paginate();
 
         return view('products.index', [
             'products' => $products,

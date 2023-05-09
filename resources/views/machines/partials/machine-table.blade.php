@@ -24,7 +24,7 @@
                 </a>
             </td>
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
-                <a href="{{route('machines.edit',$machine)}}">
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{route('machines.edit',$machine)}}">
                     {{__('Edit')}}
                 </a>
             </td>

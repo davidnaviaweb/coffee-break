@@ -9,13 +9,23 @@ use Illuminate\View\View;
 
 class LocationController extends Controller
 {
+    public static function getMarkers()
+    {
+        $markers = Location::all()->toArray();
+        foreach ($markers as &$marker) {
+            $marker['editlink'] = route('locations.edit', $marker['id']);
+        }
+
+        return $markers;
+    }
+
     /**
      * Display the location's index.
      */
     public function index(Request $request): View
     {
         return view('locations.index', [
-            'locations' => Location::paginate(),
+            'locations' => Location::orderBy('updated_at', 'desc')->paginate(),
         ]);
     }
 

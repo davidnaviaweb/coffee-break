@@ -15,7 +15,7 @@ class MachineController extends Controller
     public function index(Request $request): View
     {
         return view('machines.index', [
-            'machines' => Machine::paginate(),
+            'machines' => Machine::orderBy('updated_at', 'desc')->paginate(),
         ]);
     }
 

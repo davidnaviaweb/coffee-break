@@ -20,7 +20,7 @@ class CardController extends Controller
      */
     public function index()
     {
-        $cards = Card::paginate();
+        $cards = Card::orderBy('updated_at', 'desc')->paginate();
         $users = User::all();
 
         return view('cards.index', compact('cards', 'users'));
@@ -66,7 +66,7 @@ class CardController extends Controller
     {
         $card->update($request->all());
 
-        return redirect()->route('cards.edit')
+        return redirect()->route('cards.index')
             ->with('success', 'Card updated successfully');
     }
 

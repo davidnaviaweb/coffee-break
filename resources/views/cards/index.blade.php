@@ -25,7 +25,6 @@
                         @endforeach
                     </select>
                     <x-input-error :messages="$errors->get('user_id')" class="mt-2"/>
-                    <br>
                     <x-primary-button class="mt-4">{{ __('Create') }}</x-primary-button>
                 </form>
             </div>

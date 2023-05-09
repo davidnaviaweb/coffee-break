@@ -18,7 +18,7 @@
                 {{$product->name}}
             </td>
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
-                {{$product->price}}
+                {{$product->price}} &euro;
             </td>
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 place-content-center">
                 <div>
@@ -35,7 +35,7 @@
                 </div>
             </td>
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
-                <a href="{{route('products.edit',$product)}}">
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{route('products.edit',$product)}}">
                     {{__('Edit')}}
                 </a>
             </td>

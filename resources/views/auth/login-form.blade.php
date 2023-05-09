@@ -1,4 +1,4 @@
-<h4 class="text-2xl text-gray-600 dark:text-gray-100 text-center pb-5">{{__('Login')}}</h4>
+<h3 class="text-2xl text-gray-600 dark:text-gray-100 text-center pb-5">{{__('Login')}}</h3>
 <form method="POST" action="{{ route('login') }}">
 @csrf
 

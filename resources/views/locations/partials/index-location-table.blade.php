@@ -1,35 +1,41 @@
-<div>
-    <table class="table-auto text-gray-800 dark:text-gray-200">
-        @foreach($locations as $location)
-            <tr>
-                <td>
-                    {{$location->id}}
-                </td>
-                <td>
-                    {{$location->name}}
-                </td>
-                <td>
-                    {{$location->description}}
-                </td>
-                <td>
-                    {{$location->address}}
-                </td>
-                <td>
-                    {{$location->city}}
-                </td>
-                <td>
-                    {{$location->state}}
-                </td>
-                <td>
-                    {{$location->country}}
-                </td>
-                <td>
-                    <a href="{{route('locations.edit',$location)}}">
-                        {{__('Edit')}}
-                    </a>
-                </td>
-            </tr>
-        @endforeach
-    </table>
-    {{$locations->links()}}
-</div>
+<x-slot name="header">
+    @foreach(['ID' => 'left','Name'=>'left','Description'=>'left','Address'=>'center','City'=>'center','State'=>'center','Country'=>'center','Actions' => 'right'] as $label => $text_align)
+        <x-index-table-th>
+            <x-slot name="label">{{$label}}</x-slot>
+            <x-slot name="text_align">{{$text_align}}</x-slot>
+        </x-index-table-th>
+    @endforeach
+</x-slot>
+<x-slot name="body">
+    @foreach($locations as $location)
+        <tr>
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-left">
+                {{$location->id}}
+            </td>
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-left">
+                {{$location->name}}
+            </td>
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-left">
+                {{$location->description}}
+            </td>
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
+                {{$location->address}}
+            </td>
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
+                {{$location->city}}
+            </td>
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
+                {{$location->state}}
+            </td>
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
+                {{$location->country}}
+            </td>
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                   href="{{route('locations.edit',$location)}}">
+                    {{__('Edit')}}
+                </a>
+            </td>
+        </tr>
+    @endforeach
+</x-slot>

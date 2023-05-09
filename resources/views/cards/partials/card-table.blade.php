@@ -22,7 +22,7 @@
                 {{$card->status}}
             </td>
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
-                <a href="{{route('cards.edit',$card)}}">
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{route('cards.edit',$card)}}">
                     {{__('Edit')}}
                 </a>
             </td>
