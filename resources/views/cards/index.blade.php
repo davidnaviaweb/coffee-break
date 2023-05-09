@@ -13,7 +13,7 @@
                     @csrf
                     <input type="number" name="balance" placeholder="{{ __('Card\'s balance') }}"
                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                           value="{{ old('balance', 0) }}"
+                           value="{{ old('balance') }}"
                            step="0.01"/>
                     <x-input-error :messages="$errors->get('balance')" class="mt-2"/>
                     <br>
