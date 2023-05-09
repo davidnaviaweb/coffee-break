@@ -17,13 +17,18 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('machines.index')" :active="request()->routeIs('machines.index') || request()->routeIs('machines.edit')">
-                        {{ __('Machines') }}
+                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index') || request()->routeIs('products.edit')">
+                        {{ __('Products') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index') || request()->routeIs('products.edit')">
-                        {{ __('Products') }}
+                    <x-nav-link :href="route('cards.index')" :active="request()->routeIs('cards.index') || request()->routeIs('cards.edit')">
+                        {{ __('Cards') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('machines.index')" :active="request()->routeIs('machines.index') || request()->routeIs('machines.edit')">
+                        {{ __('Machines') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

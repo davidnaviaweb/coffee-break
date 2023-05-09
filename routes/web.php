@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\ProductController;
@@ -26,11 +27,14 @@ Route::middleware('auth')->controller(ProfileController::class)->group(function 
 # Products
 Route::resource('products', ProductController::class);
 
-# Locations
-Route::resource('locations', LocationController::class);
+# Cards
+Route::resource('cards', CardController::class);
 
 # Machines
 Route::resource('machines', MachineController::class);
 
+# Locations
+Route::resource('locations', LocationController::class);
 
-require __DIR__ . '/auth.php';
+
+require __DIR__.'/auth.php';

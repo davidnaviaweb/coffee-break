@@ -20,12 +20,10 @@ class MachineFactory extends Factory
      */
     public function definition(): array
     {
-        $locations = Location::all();
-
         return [
             'name' => fake()->word,
             'description' => fake()->sentence,
-            'location_id' => fake()->randomElement($locations)
+            'location_id' => fake()->randomElement( Location::all())
         ];
     }
 

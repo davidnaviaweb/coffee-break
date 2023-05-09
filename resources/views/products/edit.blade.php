@@ -30,6 +30,7 @@
                                     @if (in_array($allergy->id, $product->allergies)) selected @endif>{{ $allergy->name }}</option>
                         @endforeach
                     </select>
+                    <x-input-error :messages="$errors->get('allergies')" class="mt-2"/>
                     <x-primary-button class="mt-4">{{ __('Update') }}</x-primary-button>
                 </form>
             </div>

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Card;
 use App\Models\Location;
 use App\Models\Machine;
-use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'demo@demo.com',
             'password' => bcrypt('demodemo')
         ]);
+
+        // Cards
+        Card::factory(20)->create();
 
         // Allergies & products
         (new AllergySeeder)->run();
