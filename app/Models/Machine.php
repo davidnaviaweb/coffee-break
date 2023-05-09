@@ -14,6 +14,12 @@ class Machine extends Model
     protected $guarded = [];
     protected $perPage = 10;
 
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+    // Attributes
     protected function name(): Attribute
     {
         return new Attribute(

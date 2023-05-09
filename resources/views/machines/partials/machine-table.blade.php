@@ -19,7 +19,9 @@
                 {{$machine->description}}
             </td>
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
-                {{$machine->description}}
+                <a href="{{route('locations.edit',$machine->location->id)}}">
+                    {{$machine->location->name}}
+                </a>
             </td>
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
                 <a href="{{route('machines.edit',$machine)}}">

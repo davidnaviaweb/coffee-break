@@ -20,14 +20,6 @@ class MachineController extends Controller
     }
 
     /**
-     * Display the machine's edit form.
-     */
-    public function edit(Request $request, Machine $machine): View
-    {
-        return view('machines.edit', compact('machine'));
-    }
-
-    /**
      * Create a new machine.
      */
     public function store(StoreMachine $request)
@@ -35,6 +27,14 @@ class MachineController extends Controller
         Machine::create($request->all());
 
         return redirect(route('machines.index'));
+    }
+
+    /**
+     * Display the machine's edit form.
+     */
+    public function edit(Request $request, Machine $machine): View
+    {
+        return view('machines.edit', compact('machine'));
     }
 
     /**
