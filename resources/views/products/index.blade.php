@@ -29,10 +29,12 @@
                     <x-primary-button class="mt-4">{{ __('Create') }}</x-primary-button>
                 </form>
             </div>
-
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="text-gray-800 dark:text-gray-200">
-                    @include('products.partials.index-product-table')
+                    <x-index-table>
+                        @include('products.partials.product-table')
+                    </x-index-table>
+                    {{$products->links()}}
                 </div>
             </div>
         </div>
