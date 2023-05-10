@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMachine;
 use App\Models\Machine;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -40,11 +41,12 @@ class MachineController extends Controller
     /**
      * Update a machine.
      */
-    public function update(StoreMachine $request, Machine $machine): View
+    public function update(StoreMachine $request, Machine $machine): RedirectResponse
     {
         $machine->update($request->all());
 
-        return view('machines.edit', compact('machine'));
+        return redirect()->route('machines.index')
+            ->with('success', sprintf(__('%s updated successfully'), __('Machine')));
     }
 
     /**

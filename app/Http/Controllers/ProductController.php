@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProduct;
 use App\Models\Allergy;
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -50,15 +51,14 @@ class ProductController extends Controller
     /**
      * Update a product.
      */
-    public function update(StoreProduct $request, Product $product): View
+    public function update(StoreProduct $request, Product $product): RedirectResponse
     {
         $product->update($request->all());
         $product->allergies()->sync($request->allergies);
-
-        $allergies = Allergy::all();
         $product->allergies = $this->getAllergiesIds($product);
 
-        return view('products.edit', compact('product', 'allergies'));
+        return redirect()->route('products.index')
+            ->with('success', sprintf(__('%s updated successfully'), __('Product')));
     }
 
     /**

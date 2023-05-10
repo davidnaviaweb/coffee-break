@@ -15,18 +15,15 @@ class Card extends Model
     public const INACTIVE = 'inactive';
     public const ACTIVE = 'active';
     public const BLOCKED = 'blocked';
-
     public const STATI = [
         self::INACTIVE,
         self::ACTIVE,
         self::BLOCKED,
     ];
 
-
     protected $fillable = ['serial_number', 'balance', 'user_id'];
     protected $guarded = ['status'];
     protected $perPage = 10;
-
 
     public function user()
     {

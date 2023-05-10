@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLocation;
 use App\Models\Location;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -39,7 +40,6 @@ class LocationController extends Controller
         return redirect(route('locations.index'));
     }
 
-
     /**
      * Display the location's edit form.
      */
@@ -48,15 +48,15 @@ class LocationController extends Controller
         return view('locations.edit', compact('location'));
     }
 
-
     /**
      * Update a location.
      */
-    public function update(StoreLocation $request, Location $location): View
+    public function update(StoreLocation $request, Location $location): RedirectResponse
     {
         $location->update($request->all());
 
-        return view('locations.edit', compact('location'));
+        return redirect()->route('locations.index')
+            ->with('success', sprintf(__('%s updated successfully'), __('Location')));
     }
 
     /**

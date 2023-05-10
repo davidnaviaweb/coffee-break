@@ -26,11 +26,11 @@ class StoreLocation extends FormRequest
             'description' => 'required',
             'address' => 'required',
             'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required',
+            // 'state' => 'required',
+            // 'zip' => 'required',
             'country' => 'required',
-            'lat' => 'required',
-            'lng' => 'required',
+            // 'lat' => 'required',
+            // 'lng' => 'required',
         ];
     }
 }

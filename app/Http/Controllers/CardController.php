@@ -67,7 +67,7 @@ class CardController extends Controller
         $card->update($request->all());
 
         return redirect()->route('cards.index')
-            ->with('success', 'Card updated successfully');
+            ->with('success', sprintf(__('%s updated successfully'), __('Card')));
     }
 
     /**

@@ -10,6 +10,10 @@ class Location extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description', 'address', 'city', 'state', 'country'];
+    protected $guarded = [];
+    protected $perPage = 10;
+
     protected function name(): Attribute
     {
         return new Attribute(
