@@ -10,7 +10,7 @@ class Machine extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'location_id'];
     protected $guarded = [];
     protected $perPage = 10;
 

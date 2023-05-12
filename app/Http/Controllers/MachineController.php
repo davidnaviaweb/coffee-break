@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMachine;
+use App\Models\Location;
 use App\Models\Machine;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class MachineController extends Controller
     {
         return view('machines.index', [
             'machines' => Machine::orderBy('updated_at', 'desc')->paginate(),
+            'locations' => Location::all()
         ]);
     }
 
@@ -35,7 +37,9 @@ class MachineController extends Controller
      */
     public function edit(Request $request, Machine $machine): View
     {
-        return view('machines.edit', compact('machine'));
+        $locations = Location::all();
+
+        return view('machines.edit', compact('machine', 'locations'));
     }
 
     /**

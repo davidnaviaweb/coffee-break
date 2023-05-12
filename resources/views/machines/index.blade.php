@@ -20,6 +20,15 @@
                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                            value="{{ old('description') }}"/>
                     <x-input-error :messages="$errors->get('description')" class="mt-2"/>
+                    <br>
+                    <select name="location_id"
+                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                        <option value="">{{__('Select a location')}}</option>
+                        @foreach($locations as $location)
+                            <option value="{{$location->id}}">{{ $location->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-input-error :messages="$errors->get('location_id')" class="mt-2"/>
                     <x-primary-button class="mt-4">{{ __('Create') }}</x-primary-button>
                 </form>
             </div>

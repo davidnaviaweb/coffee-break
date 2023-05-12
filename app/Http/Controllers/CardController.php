@@ -44,15 +44,16 @@ class CardController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $card = Card::find($id);
-        $users = User::all();
         $stati = Card::STATI;
+        $users = User::all();
 
-        return view('cards.edit', compact('card', 'users', 'stati'));
+        return view('cards.edit', compact('card', 'stati', 'users'));
     }
 
     /**

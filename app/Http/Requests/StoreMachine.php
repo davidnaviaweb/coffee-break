@@ -24,6 +24,7 @@ class StoreMachine extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
+            'location_id' => 'required'
         ];
     }
 
