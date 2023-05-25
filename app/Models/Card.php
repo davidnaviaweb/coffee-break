@@ -21,8 +21,8 @@ class Card extends Model
         self::BLOCKED,
     ];
 
-    protected $fillable = ['serial_number', 'balance', 'user_id'];
-    protected $guarded = ['status'];
+    protected $fillable = ['serial_number', 'balance', 'user_id', 'status'];
+    protected $guarded = [];
     protected $perPage = 10;
 
     public function user()

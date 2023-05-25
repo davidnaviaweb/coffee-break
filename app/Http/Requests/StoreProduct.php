@@ -23,7 +23,7 @@ class StoreProduct extends FormRequest
     {
         return [
             'name' => 'required',
-            'price' => 'required',
+            'image' => 'nullable|sometimes|mimes:jpeg,png,jpg,gif',
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Allergy;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -31,10 +32,7 @@ class ProductController extends Controller
     {
         $product = Product::create($request->all());
 
-        $this->updateAllergies($product, $request);
-
-
-        return redirect(route('products.index'));
+        return $this->update($request, $product);
     }
 
     /**
@@ -54,6 +52,13 @@ class ProductController extends Controller
     public function update(StoreProduct $request, Product $product): RedirectResponse
     {
         $product->update($request->all());
+
+        // Image handler
+        $url = $this->saveImage($request);
+        $product->image = $url ?: $product->image;
+        $product->save();
+
+        // Allergies
         $product->allergies()->sync($request->allergies);
         $product->allergies = $this->getAllergiesIds($product);
 
@@ -86,5 +91,17 @@ class ProductController extends Controller
         return array_map(function ($allergy) {
             return $allergy['id'];
         }, $product->allergies->toArray());
+    }
+
+    /**
+     * @param  StoreProduct  $request
+     * @return string
+     */
+    private function saveImage(StoreProduct $request)
+    {
+        if (empty($request->file('image'))) {
+            return '';
+        }
+        return Storage::url($request->file('image')->store('products'));
     }
 }

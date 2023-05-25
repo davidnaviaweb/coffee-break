@@ -18,7 +18,6 @@ class ProductSeeder extends Seeder
         for ($i = 1; $i <= 10; $i++) {
             $product = Product::create([
                 'name' => fake()->word,
-                'price' => fake()->randomFloat(2, 0.50, 3),
                 'image' => fake()->imageUrl(400, 400),
             ]);
             $allergies = fake()->randomElements(array_map(fn($item) => $item['id'], $allAllergies), 3);
