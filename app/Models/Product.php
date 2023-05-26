@@ -19,6 +19,11 @@ class Product extends Model
         return $this->belongsToMany(Allergy::class);
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
     // Attributes
     protected function name(): Attribute
     {

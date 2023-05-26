@@ -19,6 +19,11 @@ class Machine extends Model
         return $this->belongsTo(Location::class);
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
     // Attributes
     protected function name(): Attribute
     {
