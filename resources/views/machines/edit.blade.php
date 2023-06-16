@@ -36,7 +36,13 @@
             </div>
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="w-full">
+                    <h4 class="text-gray-800 dark:text-gray-200 mb-4">{{__('Add product')}}</h4>
+                    @include('machines.partials.add-product-form')
+                    <hr class="mb-10">
+                    <h4 class="text-gray-800 dark:text-gray-200 mb-">{{__('Products in this machine')}}</h4>
+                    <x-index-table>
                     @include('machines.partials.machine-products-table')
+                    </x-index-table>
                 </div>
             </div>
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">

@@ -42,7 +42,7 @@ class MachineController extends Controller
     {
         $locations = Location::all();
         $allProducts = Product::all();
-        $products = $machine->products()->allRelatedIds();
+        $products = $machine->products;
 
         return view('machines.edit', compact('machine', 'locations', 'allProducts', 'products'));
     }
@@ -81,7 +81,29 @@ class MachineController extends Controller
         ]);
 
         if ($validator->passes()) {
-            return response()->json(['success' => 'Added new records.']);
+            $machine = Machine::find($request->machine_id);
+            $product = Product::find($request->product_id);
+
+            if (in_array($product->id, $machine->products()->allRelatedIds()->toArray())) {
+                return response()->json(['error' => ['product_id' => [__('This product already exists in this machine')]]]);
+            }
+
+            $machine->products()->attach($product, [
+                'price' => $request->price,
+                'stock' => $request->stock
+            ]);
+
+            $machine->save();
+
+            $response = [
+                'product_id' => $product->id,
+                'image' => url($product->image),
+                'name' => $product->name,
+                'price' => $request->price,
+                'stock' => $request->stock
+            ];
+
+            return response()->json(['success' => $response]);
         }
 
         return response()->json(['error' => $validator->errors()->toArray()]);
