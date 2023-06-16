@@ -88,22 +88,27 @@ class MachineController extends Controller
             $machine = Machine::find($request->machine_id);
             $product = Product::find($request->product_id);
 
-//            if (in_array($product->id, $machine->products()->allRelatedIds()->toArray())) {
-//                return response()->json(['error' => ['product_id' => [__('This product already exists in this machine')]]]);
-//            }
+            if (in_array($product->id, $machine->products()->allRelatedIds()->toArray())) {
+                return response()->json(['error' => ['product_id' => [__('This product already exists in this machine')]]]);
+            }
+            // Convert price to float with 2 decimals
+            $price = number_format($request->price, 2, '.', '');
 
+            // Attach product to machine
             $machine->products()->attach($product, [
-                'price' => $request->price,
+                'price' => $price,
                 'stock' => $request->stock
             ]);
 
+            // Save machine
             $machine->save();
 
+            // Return response
             $response = [
                 'product_id' => $product->id,
                 'image' => url($product->image),
                 'name' => $product->name,
-                'price' => $request->price,
+                'price' => $price,
                 'stock' => $request->stock
             ];
 
