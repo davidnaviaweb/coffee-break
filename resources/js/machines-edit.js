@@ -34,18 +34,21 @@ const machineProducts = {
     },
     addProduct: (form) => {
 
-        let passed = true
-        // form.querySelectorAll('select, input').each((element) => {
-        //     if (!machineProducts.validate(element)) passed = false
-        // })
-
-        if (!passed) return
+        // let passed = true
+        // // form.querySelectorAll('select, input').each((element) => {
+        // //     if (!machineProducts.validate(element)) passed = false
+        // // })
+        //
+        // if (!passed) return
 
         form.querySelector('button').disabled = true
-
-        console.table(form)
         form.disabled = true
         form.classList.add('waiting')
+        form.querySelectorAll('input, select').forEach((input) => {
+            input.classList.add('border-gray-300')
+            input.classList.remove('border-red-500')
+            input.parentElement.querySelector('p').innerText = ''
+        })
 
         let data = new FormData(form)
 
@@ -57,18 +60,22 @@ const machineProducts = {
             return response.text()
         }).then(response => {
             const resp = JSON.parse(response)
-            if (resp.success) {
-                get_report()
-                window.setTimeout(() => {
-                    document.querySelectorAll('.validation-errors').forEach((item) => item.innerHTML = '')
-                    document.querySelector('#import_process_errors').style.display = 'none'
-                    document.querySelector('#import_process_errors').textContent = ''
-                    form.disabled = false
-                    form.classList.remove('waiting')
-                }, 2000)
+            if (resp.error) {
+                console.log(resp.error)
+                const fields = Object.keys(resp.error)
+                const msgs = Object.values(resp.error)
+                fields.forEach((field, index) => {
+                    const input = form.querySelector('*[name="' + field + '"]')
+                    input.classList.remove('border-gray-300')
+                    input.classList.add('border-red-500')
+                    input.parentElement.querySelector('p').innerText = msgs[index][0]
+                })
+            } else {
+
             }
         }).catch(function () {
         }).finally(function () {
+            form.querySelector('button').disabled = false
         })
 
     },

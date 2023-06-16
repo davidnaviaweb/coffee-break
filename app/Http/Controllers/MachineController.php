@@ -6,9 +6,11 @@ use App\Http\Requests\StoreMachine;
 use App\Models\Location;
 use App\Models\Machine;
 use App\Models\Product;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Validator;
 
 class MachineController extends Controller
 {
@@ -66,11 +68,23 @@ class MachineController extends Controller
         return redirect(route('machines.index'));
     }
 
-    public function addProduct($request)
+    public function addProduct(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'required',
+            'price' => 'required|min:0.05',
+            'stock' => 'required|min:1',
+        ], [
+            'product_id.required' => __('Please select a product'),
+            'price.required' => __('Please set a price'),
+            'stock.required' => __('Please set stock'),
+        ]);
 
-        return response()->json($request);
+        if ($validator->passes()) {
+            return response()->json(['success' => 'Added new records.']);
+        }
 
+        return response()->json(['error' => $validator->errors()->toArray()]);
     }
 
 }
