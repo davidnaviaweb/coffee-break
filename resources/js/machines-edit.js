@@ -71,10 +71,26 @@ const machineProducts = {
                     input.parentElement.querySelector('p').innerText = msgs[index][0]
                 })
             } else {
+                const fields = Object.keys(resp.success)
+                const values = Object.values(resp.success)
+                let newRow = document.getElementById('product-row').content.cloneNode(true);
 
+                fields.forEach((field, index) => {
+                    const cell = newRow.querySelector('#product-row-' + field);
+                    if (cell !== null) {
+                        if (field === 'image') {
+                            cell.querySelector('img').src = values[index]
+                        } else {
+                            cell.innerText = values[index]
+                        }
+                    }
+                })
+
+                document.getElementById('machine-products-table').getElementsByTagName('tbody')[0].appendChild(newRow);
             }
-        }).catch(function () {
-        }).finally(function () {
+        }).catch(error => {
+            console.log(error)
+        }).finally(() => {
             form.querySelector('button').disabled = false
         })
 

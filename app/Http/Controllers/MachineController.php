@@ -88,9 +88,9 @@ class MachineController extends Controller
             $machine = Machine::find($request->machine_id);
             $product = Product::find($request->product_id);
 
-            if (in_array($product->id, $machine->products()->allRelatedIds()->toArray())) {
-                return response()->json(['error' => ['product_id' => [__('This product already exists in this machine')]]]);
-            }
+//            if (in_array($product->id, $machine->products()->allRelatedIds()->toArray())) {
+//                return response()->json(['error' => ['product_id' => [__('This product already exists in this machine')]]]);
+//            }
 
             $machine->products()->attach($product, [
                 'price' => $request->price,
