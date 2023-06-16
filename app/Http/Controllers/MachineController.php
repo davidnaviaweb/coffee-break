@@ -72,12 +72,16 @@ class MachineController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required',
-            'price' => 'required|min:0.05',
-            'stock' => 'required|min:1',
+            'price' => 'required|numeric|min:0.05',
+            'stock' => 'required|numeric',
         ], [
             'product_id.required' => __('Please select a product'),
             'price.required' => __('Please set a price'),
+            'price.numeric' => __('Please set a price with a decimal number'),
+            'price.min' => __('Minimum price is 0.05'),
             'stock.required' => __('Please set stock'),
+            'stock.numeric' => __('Please set stock with numbers'),
+
         ]);
 
         if ($validator->passes()) {

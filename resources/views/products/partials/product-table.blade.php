@@ -1,6 +1,6 @@
 <x-slot name="header">
     <tr>
-        @foreach(['ID' => 'left','Name'=>'left','Image' =>'center', 'Allergies' => 'center', 'Actions' => 'right'] as $label => $text_align)
+        @foreach(['' => 'left','Name'=>'left','Allergies' => 'center', 'Actions' => 'right'] as $label => $text_align)
             <x-index-table-th>
                 <x-slot name="label">{{$label}}</x-slot>
                 <x-slot name="text_align">{{$text_align}}</x-slot>
@@ -11,16 +11,14 @@
 <x-slot name="body">
     @foreach($products as $product)
         <tr>
-            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-left">
-                {{$product->id}}
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
+                <div class="flex justify-center">
+                    <img class="fill-current text-gray-500 mr-2 w-10 h-10 rounded-full shadow-xl"
+                         alt="{{$product->name}}" src="{{$product->image}}"/>
+                </div>
             </td>
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-left">
                 {{$product->name}}
-            </td>
-            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 place-content-center">
-                <div>
-                    <img class="mx-auto" alt="{{$product->name}}" src="{{$product->image}}" width="50" height="50"/>
-                </div>
             </td>
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
                 <div class="flex justify-center items-center">

@@ -41,7 +41,7 @@
                     <hr class="mb-10">
                     <h4 class="text-gray-800 dark:text-gray-200 mb-">{{__('Products in this machine')}}</h4>
                     <x-index-table>
-                    @include('machines.partials.machine-products-table')
+                        @include('machines.partials.machine-products-table')
                     </x-index-table>
                 </div>
             </div>
