@@ -15,8 +15,13 @@
         @routes
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <body class="font-sans antialiased" x-data="{ darkMode: false }" x-init="
+    if (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      localStorage.setItem('darkMode', JSON.stringify(true));
+    }
+    darkMode = JSON.parse(localStorage.getItem('darkMode'));
+    $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" x-cloak>
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900" x-bind:class="{'dark' : darkMode === true}">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -29,7 +34,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="dark:bg-gray-900">
                 {{ $slot }}
             </main>
         </div>
