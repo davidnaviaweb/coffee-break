@@ -51,7 +51,6 @@ class MachineController extends Controller
     public function update(StoreMachine $request, Machine $machine): RedirectResponse
     {
         $machine->update($request->all());
-        $machine->allergies()->sync($request->products);
 
         return redirect()->route('machines.index')
             ->with('success', sprintf(__('%s updated successfully'), __('Machine')));
@@ -66,4 +65,12 @@ class MachineController extends Controller
 
         return redirect(route('machines.index'));
     }
+
+    public function addProduct($request)
+    {
+
+        return response()->json($request);
+
+    }
+
 }

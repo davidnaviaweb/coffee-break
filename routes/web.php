@@ -3,6 +3,7 @@
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MachineController;
+use App\Http\Controllers\MachineProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,11 @@ Route::resource('cards', CardController::class);
 
 # Machines
 Route::resource('machines', MachineController::class);
+
+# Ajax calls for products in machines
+Route::post('machines/addProduct', [MachineController::class, 'addProduct'])->name('machines.addProduct');
+Route::patch('machines/updateProduct', [MachineController::class, 'updateProduct'])->name('machines.updateProduct');
+Route::delete('machines/deleteProduct', [MachineController::class, 'deleteProduct'])->name('machines.deleteProduct');
 
 # Locations
 Route::resource('locations', LocationController::class);
