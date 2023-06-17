@@ -13,18 +13,19 @@
                 <img class="fill-current text-gray-500 mr-2 w-10 h-10 rounded-full shadow-xl"
                      src="{{url($product->image)}}">
             </td>
-            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-left">
+            <td class="name border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-left">
                 {{$product->name}}
             </td>
-            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
+            <td class="price border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
                 {{number_format($product->pivot->price, 2, '.', '')}}
             </td>
-            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
+            <td class="stock border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
                 {{$product->pivot->stock}}
             </td>
             <td class="actions border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
                 <a class="edit font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4" href="#"
-                   data-product="{{$product->id}}" data-machine="{{$machine->id}}" data-csrf="{{csrf_token()}}">
+                   data-product="{{$product->id}}" data-machine="{{$machine->id}}" data-csrf="{{csrf_token()}}"
+                   x-on:click.prevent="$dispatch('open-modal', 'edit-machine-product')">
                     {{__('Edit')}}
                 </a>
                 <a class="delete font-medium text-blue-600 dark:text-blue-500 hover:underline" href="#"

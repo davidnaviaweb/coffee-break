@@ -128,6 +128,31 @@ class MachineController extends Controller
      * @param  Request  $request
      * @return JsonResponse
      */
+    public function updateProduct(Request $request): JsonResponse
+    {
+        try {
+            $machine = Machine::find($request->machine_id);
+
+            // Convert price to float with 2 decimals
+            $price = number_format($request->price, 2, '.', '');
+
+            // Attach product to machine
+            $machine->products()->update([
+                'product_id' => $request->product_id,
+                'price' => $price,
+                'stock' => $request->stock
+            ]);
+
+            return response()->json(['success' => true]);
+        } catch (Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()]);
+        }
+    }
+
+    /**
+     * @param  Request  $request
+     * @return JsonResponse
+     */
     public function deleteProduct(Request $request): JsonResponse
     {
         try {

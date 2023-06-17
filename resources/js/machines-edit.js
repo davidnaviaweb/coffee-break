@@ -21,6 +21,24 @@ const machineProducts = {
         //     machineProducts.addRow(row, 'before');
         // })
         // Remove row
+        machineProducts.live('click', '.actions .edit', (event) => {
+            const row = event.target.closest('tr')
+            const modal = document.getElementById('edit-machine-product')
+
+            const name = row.querySelector('.name').innerText
+            const price = row.querySelector('.price').innerText
+            const stock = row.querySelector('.stock').innerText
+            modal.querySelector('.name').innerText = name
+            modal.querySelector('input[name=machine_id]').value = event.target.dataset.machine
+            modal.querySelector('input[name=product_id]').value = event.target.dataset.product
+            modal.querySelector('input[name=price]').value = price
+            modal.querySelector('input[name=stock]').value = stock
+        })
+        machineProducts.live('click', '.update-product', (event) => {
+            event.preventDefault()
+            machineProducts.updateProduct(event.target);
+        })
+
         machineProducts.live('click', '.actions .delete', (event) => {
             event.preventDefault()
             machineProducts.removeProduct(event.target);
@@ -62,6 +80,68 @@ const machineProducts = {
                     input.classList.add('border-red-500')
                     input.parentElement.querySelector('p').innerText = msgs[index][0]
                 })
+            } else {
+                const fields = Object.keys(resp.success)
+                const values = Object.values(resp.success)
+                let newRow = document.getElementById('product-row').content.cloneNode(true);
+
+                fields.forEach((field, index) => {
+                    const cell = newRow.querySelector('#product-row-' + field);
+                    if (cell !== null) {
+                        if (field === 'image') {
+                            cell.querySelector('img').src = values[index]
+                        } else {
+                            cell.innerText = values[index]
+                        }
+                    }
+                })
+                newRow.querySelectorAll('.actions a').forEach(action => {
+                    action.dataset.product = resp.success['product_id']
+                    action.dataset.csrf = resp.success['csrf']
+                })
+                document.getElementById('machine-products-table').getElementsByTagName('tbody')[0].appendChild(newRow);
+            }
+        }).catch(error => {
+            console.log(error)
+        }).finally(() => {
+            form.querySelector('button').disabled = false
+        })
+    },
+    updateProduct: (button) => {
+        button.disabled = true
+        const form = button.closest('#form-container').querySelector('form')
+        form.disabled = true
+        form.classList.add('waiting')
+        form.querySelectorAll('input').forEach((input) => {
+            input.classList.add('border-gray-300')
+            input.classList.remove('border-red-500')
+            input.parentElement.querySelector('p').innerText = ''
+        })
+        let data = new FormData(form)
+        data.append('_method', 'patch')
+
+        fetch(route('machines.updateProduct'), {
+            method: 'post',
+            headers: {
+                'X-CSRF-TOKEN': button.dataset.csrf,
+            },
+            body: data,
+            dataType: 'json',
+            credentials: 'same-origin'
+        }).then(response => {
+            return response.text()
+        }).then(response => {
+            const resp = JSON.parse(response)
+            if (resp.error) {
+                console.log(resp.error)
+                // const fields = Object.keys(resp.error)
+                // const msgs = Object.values(resp.error)
+                // fields.forEach((field, index) => {
+                //     const input = form.querySelector('*[name="' + field + '"]')
+                //     input.classList.remove('border-gray-300')
+                //     input.classList.add('border-red-500')
+                //     input.parentElement.querySelector('p').innerText = msgs[index][0]
+                // })
             } else {
                 const fields = Object.keys(resp.success)
                 const values = Object.values(resp.success)
