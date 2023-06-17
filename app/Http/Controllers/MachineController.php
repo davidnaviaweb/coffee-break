@@ -6,7 +6,9 @@ use App\Http\Requests\StoreMachine;
 use App\Models\Location;
 use App\Models\Machine;
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -68,7 +70,11 @@ class MachineController extends Controller
         return redirect(route('machines.index'));
     }
 
-    public function addProduct(Request $request)
+    /**
+     * @param  Request  $request
+     * @return JsonResponse
+     */
+    public function addProduct(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required',
@@ -109,7 +115,7 @@ class MachineController extends Controller
                 'image' => url($product->image),
                 'name' => $product->name,
                 'price' => $price,
-                'stock' => $request->stock
+                'stock' => $request->stock,
             ];
 
             return response()->json(['success' => $response]);
@@ -118,4 +124,20 @@ class MachineController extends Controller
         return response()->json(['error' => $validator->errors()->toArray()]);
     }
 
+    /**
+     * @param  Request  $request
+     * @return JsonResponse
+     */
+    public function deleteProduct(Request $request): JsonResponse
+    {
+        try {
+            $machine = Machine::find($request->machine_id);
+            $machine->products()->detach($request->product_id);
+            $machine->save();
+
+            return response()->json(['success' => true]);
+        } catch (Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()]);
+        }
+    }
 }

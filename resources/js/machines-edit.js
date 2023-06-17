@@ -20,11 +20,11 @@ const machineProducts = {
         //     const row = event.target.closest('.row');
         //     machineProducts.addRow(row, 'before');
         // })
-        // // Remove row
-        // machineProducts.live('click', '.remove-row', (event) => {
-        //     const row = event.target.closest('.row');
-        //     machineProducts.removeRow(row);
-        // })
+        // Remove row
+        machineProducts.live('click', '.actions .delete', (event) => {
+            event.preventDefault()
+            machineProducts.removeProduct(event.target);
+        })
         // // Remove clone row on submit
         // machineProducts.live('submit', 'form', (event) => {
         //     document.querySelectorAll('.row-clone').forEach((item) => {
@@ -33,14 +33,6 @@ const machineProducts = {
         // })
     },
     addProduct: (form) => {
-
-        // let passed = true
-        // // form.querySelectorAll('select, input').each((element) => {
-        // //     if (!machineProducts.validate(element)) passed = false
-        // // })
-        //
-        // if (!passed) return
-
         form.querySelector('button').disabled = true
         form.disabled = true
         form.classList.add('waiting')
@@ -85,7 +77,10 @@ const machineProducts = {
                         }
                     }
                 })
-
+                newRow.querySelectorAll('.actions a').forEach(action => {
+                    action.dataset.product = resp.success['product_id']
+                    action.dataset.csrf = resp.success['csrf']
+                })
                 document.getElementById('machine-products-table').getElementsByTagName('tbody')[0].appendChild(newRow);
             }
         }).catch(error => {
@@ -93,11 +88,37 @@ const machineProducts = {
         }).finally(() => {
             form.querySelector('button').disabled = false
         })
-
     },
-    // validate: (element) => {
-    //     Number.isInteger(element.value) && element.value > 0
-    // },
+    removeProduct: (button) => {
+        button.disabled = true
+        let data = new FormData()
+        data.append('product_id', button.dataset.product)
+        data.append('machine_id', button.dataset.machine)
+        data.append('_method', 'delete')
+        fetch(route('machines.deleteProduct'), {
+            method: 'post',
+            headers: {
+                'X-CSRF-TOKEN': button.dataset.csrf,
+            },
+            body: data,
+            dataType: 'json',
+            credentials: 'same-origin'
+        }).then(response => {
+            return response.text()
+        }).then(response => {
+            const resp = JSON.parse(response)
+            console.log(resp)
+            if (resp.error) {
+            } else {
+                const row = button.closest('tr');
+                row.parentNode.removeChild(row);
+            }
+        }).catch(error => {
+            console.log(error)
+        }).finally(() => {
+            button.disabled = false
+        })
+    },
     live: (eventType, elementQuerySelector, callback) => {
         document.addEventListener(eventType, function (event) {
             const items = document.querySelectorAll(elementQuerySelector);

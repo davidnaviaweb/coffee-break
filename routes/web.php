@@ -26,21 +26,21 @@ Route::middleware('auth')->controller(ProfileController::class)->group(function 
 });
 
 # Products
-Route::resource('products', ProductController::class);
+Route::resource('products', ProductController::class)->middleware(['auth', 'verified']);
 
 # Cards
-Route::resource('cards', CardController::class);
+Route::resource('cards', CardController::class)->middleware(['auth', 'verified']);
 
-# Machines
-Route::resource('machines', MachineController::class);
-
-# Ajax calls for products in machines
+# Ajax calls for products in machines (must be placed before resource
 Route::post('machines/addProduct', [MachineController::class, 'addProduct'])->name('machines.addProduct');
 Route::patch('machines/updateProduct', [MachineController::class, 'updateProduct'])->name('machines.updateProduct');
 Route::delete('machines/deleteProduct', [MachineController::class, 'deleteProduct'])->name('machines.deleteProduct');
 
+# Machines
+Route::resource('machines', MachineController::class)->middleware(['auth', 'verified']);
+
 # Locations
-Route::resource('locations', LocationController::class);
+Route::resource('locations', LocationController::class)->middleware(['auth', 'verified']);
 
 
 require __DIR__.'/auth.php';
