@@ -1,8 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <a href="{{route('machines.index')}}">{{__('Back')}}</a> | {{ __('Edit') }} {{ __('Machine') }}
-            - {{$machine->id}}
+        <h2 class="inline-flex font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <a class="inline-flex text-blue-600 dark:text-blue-500 hover:text-blue-700 dark:hover:text-blue-700" href="{{route('machines.index')}}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+                <span class="ml-2">{{sprintf(__('Back to %s'), __('machines')) }} </span>
+            </a>
         </h2>
     </x-slot>
 
@@ -66,8 +70,9 @@
                                class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Price') }}</label>
                         <input type="number" name="price" placeholder="{{ __('Product\'s price') }}"
                                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                               step="0.01"
-                               min="0"/>
+                               step="0.05"
+                               min="0.05"
+                               onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)"/>
                         <p class="mt-2 text-red-500 italic"></p>
                     </div>
                     <div class="form-group w-full">
@@ -81,7 +86,7 @@
                     </div>
                 </form>
                 <div class="mt-4 flex justify-end">
-                    <x-secondary-button x-on:click="$dispatch('close')">
+                    <x-secondary-button class="cancel" x-on:click="$dispatch('close')">
                         {{ __('Cancel') }}
                     </x-secondary-button>
                     <x-confirm-button class="update-product ml-3">

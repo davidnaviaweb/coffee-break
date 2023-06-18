@@ -29,8 +29,8 @@ const machineProducts = {
             const price = row.querySelector('.price').innerText
             const stock = row.querySelector('.stock').innerText
             modal.querySelector('.name').innerText = name
-            modal.querySelector('input[name=machine_id]').value = event.target.dataset.machine
-            modal.querySelector('input[name=product_id]').value = event.target.dataset.product
+            modal.querySelector('input[name=machine_id]').value = row.dataset.machine
+            modal.querySelector('input[name=product_id]').value = row.dataset.product
             modal.querySelector('input[name=price]').value = price
             modal.querySelector('input[name=stock]').value = stock
         })
@@ -83,7 +83,7 @@ const machineProducts = {
             } else {
                 const fields = Object.keys(resp.success)
                 const values = Object.values(resp.success)
-                let newRow = document.getElementById('product-row').content.cloneNode(true);
+                let newRow = document.getElementById('product-row').content.cloneNode(true).querySelector('tr');
 
                 fields.forEach((field, index) => {
                     const cell = newRow.querySelector('#product-row-' + field);
@@ -93,17 +93,19 @@ const machineProducts = {
                         } else {
                             cell.innerText = values[index]
                         }
+                        cell.id = '';
+                        cell.classList.add(field)
                     }
                 })
-                newRow.querySelectorAll('.actions a').forEach(action => {
-                    action.dataset.product = resp.success['product_id']
-                    action.dataset.csrf = resp.success['csrf']
-                })
+                newRow.dataset.product = resp.success['product_id']
+                newRow.dataset.csrf = resp.success['csrf']
                 document.getElementById('machine-products-table').getElementsByTagName('tbody')[0].appendChild(newRow);
             }
         }).catch(error => {
             console.log(error)
         }).finally(() => {
+            form.disabled = false;
+            form.classList.remove('waiting')
             form.querySelector('button').disabled = false
         })
     },
@@ -132,41 +134,21 @@ const machineProducts = {
             return response.text()
         }).then(response => {
             const resp = JSON.parse(response)
+            console.log(resp)
             if (resp.error) {
                 console.log(resp.error)
-                // const fields = Object.keys(resp.error)
-                // const msgs = Object.values(resp.error)
-                // fields.forEach((field, index) => {
-                //     const input = form.querySelector('*[name="' + field + '"]')
-                //     input.classList.remove('border-gray-300')
-                //     input.classList.add('border-red-500')
-                //     input.parentElement.querySelector('p').innerText = msgs[index][0]
-                // })
             } else {
-                const fields = Object.keys(resp.success)
-                const values = Object.values(resp.success)
-                let newRow = document.getElementById('product-row').content.cloneNode(true);
-
-                fields.forEach((field, index) => {
-                    const cell = newRow.querySelector('#product-row-' + field);
-                    if (cell !== null) {
-                        if (field === 'image') {
-                            cell.querySelector('img').src = values[index]
-                        } else {
-                            cell.innerText = values[index]
-                        }
-                    }
-                })
-                newRow.querySelectorAll('.actions a').forEach(action => {
-                    action.dataset.product = resp.success['product_id']
-                    action.dataset.csrf = resp.success['csrf']
-                })
-                document.getElementById('machine-products-table').getElementsByTagName('tbody')[0].appendChild(newRow);
+                const row = document.querySelector('tr[data-product="' + data.get('product_id')  + '"]');
+                row.querySelector('.price').innerHTML = resp.success.price
+                row.querySelector('.stock').innerHTML = resp.success.stock
+                form.parentNode.querySelector('.cancel').click();
             }
         }).catch(error => {
             console.log(error)
         }).finally(() => {
-            form.querySelector('button').disabled = false
+            form.disabled = false
+            form.classList.remove('waiting')
+            button.disabled = false
         })
     },
     removeProduct: (button) => {

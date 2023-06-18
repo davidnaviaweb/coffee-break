@@ -11,7 +11,7 @@
 <x-slot name="body">
     @foreach($products as $product)
         <tr>
-            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
+            <td class="w-20 border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
                 <div class="flex justify-center">
                     <img class="fill-current text-gray-500 mr-2 w-10 h-10 rounded-full shadow-xl"
                          alt="{{$product->name}}" src="{{$product->image}}"/>
@@ -24,7 +24,7 @@
                 <div class="flex justify-center items-center">
                     @foreach($product->allergies as $allergy)
                         <div class="bg-white dark:bg-gray-50 border-gray-300 rounded-full ml-3">
-                            <img width="30" src="{{$allergy->image}}"/>
+                            <img width="30" src="{{$allergy->image}}" title="{{$allergy->name}}"/>
                         </div>
                     @endforeach
                 </div>

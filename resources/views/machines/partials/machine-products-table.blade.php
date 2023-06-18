@@ -8,7 +8,7 @@
 </x-slot>
 <x-slot name="body">
     @foreach($products as $product)
-        <tr>
+        <tr data-product="{{$product->id}}" data-machine="{{$machine->id}}" data-csrf="{{csrf_token()}}">
             <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200">
                 <img class="fill-current text-gray-500 mr-2 w-10 h-10 rounded-full shadow-xl"
                      src="{{url($product->image)}}">
@@ -36,7 +36,7 @@
         </tr>
     @endforeach
     <template id="product-row">
-        <tr>
+        <tr data-product="" data-machine="" data-csrf="">
             <td id="product-row-image"
                 class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200">
                 <img class="fill-current text-gray-500 mr-2 w-10 h-10 rounded-full shadow-xl"
@@ -54,11 +54,11 @@
             <td id="product-row-actions"
                 class="actions border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-right">
                 <a class="edit font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4" href="#"
-                   data-productId="" data-machine="{{$machine->id}}" data-csrf="">
-                    {{__('Edit')}}
+                   x-on:click.prevent="$dispatch('open-modal', 'edit-machine-product')">
+                {{__('Edit')}}
                 </a>
                 <a class="edit font-medium text-blue-600 dark:text-blue-500 hover:underline" href="#"
-                   data-productId="" data-machine="{{$machine->id}}" data-csrf="">
+                   data-product="" data-machine="{{$machine->id}}" data-csrf="">
                     {{__('Delete')}}
                 </a>
             </td>

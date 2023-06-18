@@ -130,23 +130,50 @@ class MachineController extends Controller
      */
     public function updateProduct(Request $request): JsonResponse
     {
-        try {
-            $machine = Machine::find($request->machine_id);
+        $validator = Validator::make($request->all(), [
+            'price' => 'required|numeric|min:0.05',
+            'stock' => 'required|numeric',
+        ], [
+            'price.required' => __('Please set a price'),
+            'price.numeric' => __('Please set a price with a decimal number'),
+            'price.min' => __('Minimum price is 0.05'),
+            'stock.required' => __('Please set stock'),
+            'stock.numeric' => __('Please set stock with numbers'),
+        ]);
 
-            // Convert price to float with 2 decimals
-            $price = number_format($request->price, 2, '.', '');
+        if ($validator->passes()) {
+            try {
+                $machine = Machine::find($request->machine_id);
+                $product = Product::find($request->product_id);
 
-            // Attach product to machine
-            $machine->products()->update([
-                'product_id' => $request->product_id,
-                'price' => $price,
-                'stock' => $request->stock
-            ]);
+                // Convert price to float with 2 decimals
+                $price = number_format($request->price, 2, '.', '');
 
-            return response()->json(['success' => true]);
-        } catch (Exception $exception) {
-            return response()->json(['error' => $exception->getMessage()]);
+                // Update product
+                $machine->products()->syncWithoutDetaching([
+                    $request->product_id => [
+                        'price' => $price,
+                        'stock' => $request->stock
+                    ]
+                ]);
+
+                // Save machine
+                $machine->save();
+
+                return response()->json([
+                    'success' => [
+                        'price' => $price,
+                        'stock' => $request->stock,
+                    ]
+                ]);
+
+            } catch (Exception $exception) {
+                return response()->json(['error' => $exception->getMessage()]);
+            }
         }
+        return response()->json(['error' => $validator->errors()->toArray()]);
+
+
     }
 
     /**
