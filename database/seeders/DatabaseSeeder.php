@@ -26,13 +26,14 @@ class DatabaseSeeder extends Seeder
         // Cards
         Card::factory(20)->create();
 
+        // Machines & locations
+        Location::factory(5)->create();
+        Machine::factory(10)->create();
+
         // Allergies & products
         (new AllergySeeder)->run();
         (new ProductSeeder)->run();
 
-        // Machines & locations
-        Location::factory(5)->create();
-        Machine::factory(50)->create();
 
     }
 }
