@@ -19,7 +19,7 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             $type = fake()->randomElement(Event::TYPES);
             $machine = fake()->randomElement(Machine::all());
             $product = fake()->randomElement($machine->products);
@@ -46,7 +46,7 @@ class EventSeeder extends Seeder
                 Event::LOGIN => json_encode(
                     [
                         'card_id' => $card->id,
-                        'card_serial_number' => $card->serial_number,
+                        'card_number' => $card->serial_number,
                         'card_status' => $card->status,
                         'response' => $response ?? []
                     ]
@@ -54,7 +54,7 @@ class EventSeeder extends Seeder
                 Event::LOGOUT => json_encode(
                     [
                         'card_id' => $card->id,
-                        'card_serial_number' => $card->serial_number,
+                        'card_number' => $card->serial_number,
                         'card_status' => $card->status
                     ]
                 ),
@@ -68,8 +68,6 @@ class EventSeeder extends Seeder
                     'data' => $data
                 ]
             );
-
-            sleep(rand(1, 3));
         }
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Machine::class, 'machine_id');
             $table->enum('type', ['purchase', 'login', 'logout', 'start', 'stop']);
-            $table->json('data');
+            $table->json('data')->default("[]");
             $table->timestamps();
         });
     }

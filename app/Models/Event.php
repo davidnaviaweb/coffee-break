@@ -20,4 +20,15 @@ class Event extends Model
         self::START,
         self::STOP
     ];
+
+    protected $fillable = ['type', 'machine_id', 'data'];
+    protected $perPage = 50;
+    protected $casts = [
+        'data' => 'json',
+    ];
+
+    public function setDataAttribute($value)
+    {
+        $this->attributes['data'] = $value ?? [];
+    }
 }
