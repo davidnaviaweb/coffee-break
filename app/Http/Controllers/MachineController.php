@@ -144,7 +144,6 @@ class MachineController extends Controller
         if ($validator->passes()) {
             try {
                 $machine = Machine::find($request->machine_id);
-                $product = Product::find($request->product_id);
 
                 // Convert price to float with 2 decimals
                 $price = number_format($request->price, 2, '.', '');

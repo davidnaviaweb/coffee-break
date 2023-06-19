@@ -19,9 +19,11 @@ class Product extends Model
         return $this->belongsToMany(Allergy::class);
     }
 
-    public function products()
+    public function machines()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Machine::class, 'machine_product')
+            ->withPivot('price', 'stock')
+            ->withTimestamps();
     }
 
     // Attributes

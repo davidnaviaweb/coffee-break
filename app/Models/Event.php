@@ -26,9 +26,4 @@ class Event extends Model
     protected $casts = [
         'data' => 'json',
     ];
-
-    public function setDataAttribute($value)
-    {
-        $this->attributes['data'] = $value ?? [];
-    }
 }

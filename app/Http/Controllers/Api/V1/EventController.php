@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\EventResource;
+use App\Models\Card;
 use App\Models\Event;
 use App\Models\Machine;
 use App\Models\Product;
-use App\Utils\Machines;
+use App\Utils\Events;
+use Exception;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -25,74 +27,78 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->json()->all();
+        $payload = (object) $request->json()->all();
 
-        $event = Event::create($request->all());
+        try {
+            if (!in_array($payload->type, Event::TYPES)) {
+                throw new Exception(__("Type {$payload->type} is not valid."));
+            }
 
-        switch ($event->type) {
-            case     Event::PURCHASE:
-////                $product = Product::find($data->product_id);
-////                echo "{$product->name} at {$data->price}";
-////
-//////                $data = json_encode([
-//////                    'product_id' => $product->id,
-//////                    'price' => $product->pivot->price,
-//////                ]);
-                break;
-            case    Event::LOGIN:
-//                echo "{$data->card_number} with status {$data->card_status}";
-////
-////                $data = json_encode(
-////                    [
-////                        'card_id' => '',
-////                        'card_serial_number' => $card->serial_number,
-////                        'card_status' => $card->status,
-////                        'response' => $response ?? []
-////                    ]
-////                );
-                break;
-//            case    Event::LOGOUT:
-//                echo "{$data->card_number} with status {$data->card_status}";
-//
-////                $data = json_encode(
-////                    [
-////                        'card_id' => $card->id,
-////                        'card_number' => $card->serial_number,
-////                        'card_status' => $card->status
-////                    ]
-////                );
-                break;
-            case    Event::START:
-                $machine = Machine::find($event->machine_id);
-                $response = Machines::format_start_response($machine);
+            switch ($payload->type ?? '') {
+                case     Event::PURCHASE:
+                    $machine = Machine::find($payload->machine_id);
 
-                return response()->json($response);
-            case    Event::STOP:
-                return response()->json(['message' => __("Machine stopped")]);
-        };
-    }
+                    // Update product
+                    $product = $machine->products()->find($payload->data['product_id']);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Event $event)
-    {
-        //
-    }
+                    // Update product
+                    $machine->products()->syncWithoutDetaching([
+                        $product->id => [
+                            'price' => $product->pivot->price,
+                            'stock' => ($product->pivot->stock - 1)
+                        ]
+                    ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Event $event)
-    {
-        //
-    }
+                    // Withdraw money from the card
+                    $card = Card::where('serial_number', '=',$payload->data['card_number'])->first();
+                    if (!is_a($card, Card::class)) {
+                        throw new Exception(__("Card with number {$payload->data['card_number']} does not exists"));
+                    }
+                    $card->balance = $card->balance - $product->pivot->price;
+                    $card->save();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Event $event)
-    {
-        //
+                    $response = Events::format_start_response($machine);
+
+                    break;
+                case Event::LOGIN:
+                    $card_number = $payload->data['card_number'] ?? 'unknown';
+                    $card = Card::where('serial_number', '=', $card_number)->first();
+
+                    if (!is_a($card, Card::class)) {
+                        throw new Exception(__("Card with number {$card_number} does not exists"));
+                    }
+
+                    $response = Events::format_login_response($card);
+                    break;
+                case    Event::LOGOUT:
+                    $card_number = $payload->data['card_number'] ?? 'unknown';
+                    $card = Card::where('serial_number', '=', $card_number)->first();
+
+                    if (!is_a($card, Card::class)) {
+                        throw new Exception(__("Card with number {$card_number} does not exists"));
+                    }
+
+                    $response = ['message' => __("Logout successful")];
+                    break;
+                case Event::START:
+                    $machine = Machine::find($payload->machine_id);
+
+                    if (!is_a($machine, Machine::class)) {
+                        throw new Exception(__("Machine with id {$payload->machine_id} does not exists"));
+                    }
+
+                    $response = Events::format_start_response($machine);
+                    break;
+                case Event::STOP:
+                    $response = ['message' => __("Machine stopped")];
+                    break;
+            }
+
+            Event::create($request->all());
+
+            return response()->json($response ?? []);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 }

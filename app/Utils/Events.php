@@ -2,11 +2,34 @@
 
 namespace App\Utils;
 
+use App\Models\Card;
 use App\Models\Machine;
+use App\Models\User;
 use JetBrains\PhpStorm\ArrayShape;
 
-class Machines
+class Events
 {
+    public static function format_login_response(Card $card)
+    {
+        $response = [
+            'status' => $card->status
+        ];
+
+        switch (strtolower($card->status)) {
+            case Card::ACTIVE:
+                $response['credit'] = $card->balance;
+                $response['name'] = $card->user->name;
+                break;
+
+            case Card::INACTIVE:
+            case Card::BLOCKED:
+                $response['error'] = __("Card is {$card->status}");
+                break;
+        }
+
+        return $response;
+    }
+
     /**
      * @param  Machine  $machine
      * @return array
