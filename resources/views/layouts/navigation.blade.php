@@ -40,6 +40,12 @@
                         {{ __('Locations') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('events.index')"
+                                :active="request()->routeIs('events.index') || request()->routeIs('events.edit')">
+                        {{ __('Events') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -47,7 +53,7 @@
                 <div class="mr-3 mt-1">
                     <button type="button" x-bind:class="darkMode ? 'bg-blue-500' : 'bg-gray-200'"
                             x-on:click="darkMode = !darkMode"
-                            class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                            class="relative inline-flex w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
                             role="switch" aria-checked="false">
                         <span class="sr-only">Dark mode toggle</span>
                         <span x-bind:class="darkMode ? 'translate-x-5 bg-gray-700' : 'translate-x-0 bg-white'"

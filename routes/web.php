@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MachineProductController;
@@ -41,6 +42,9 @@ Route::resource('machines', MachineController::class)->middleware(['auth', 'veri
 
 # Locations
 Route::resource('locations', LocationController::class)->middleware(['auth', 'verified']);
+
+# Events
+Route::resource('events', EventController::class)->middleware(['auth', 'verified']);
 
 
 require __DIR__.'/auth.php';
