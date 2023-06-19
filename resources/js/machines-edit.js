@@ -84,7 +84,6 @@ const machineProducts = {
                 const fields = Object.keys(resp.success)
                 const values = Object.values(resp.success)
                 let newRow = document.getElementById('product-row').content.cloneNode(true).querySelector('tr');
-
                 fields.forEach((field, index) => {
                     const cell = newRow.querySelector('#product-row-' + field);
                     if (cell !== null) {
@@ -97,6 +96,7 @@ const machineProducts = {
                         cell.classList.add(field)
                     }
                 })
+                newRow.dataset.machine = data.get('machine_id').toString()
                 newRow.dataset.product = resp.success['product_id']
                 newRow.dataset.csrf = resp.success['csrf']
                 document.getElementById('machine-products-table').getElementsByTagName('tbody')[0].appendChild(newRow);
