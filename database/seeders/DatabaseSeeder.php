@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Card;
+use App\Models\Event;
 use App\Models\Location;
 use App\Models\Machine;
 use App\Models\User;
@@ -33,7 +34,6 @@ class DatabaseSeeder extends Seeder
         // Allergies & products
         (new AllergySeeder)->run();
         (new ProductSeeder)->run();
-
-
+        (new EventSeeder)->run();
     }
 }
