@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Location;
+use App\Utils\Locations;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,16 +20,21 @@ class LocationFactory extends Factory
      */
     public function definition(): array
     {
+        $lat = fake()->latitude($min = 37.5, $max = 43);
+        $lng = fake()->longitude($min = -6, $max = 0);
+
+        $full_address = Locations::get_full_address($lat, $lng);
+
         return [
             'name' => fake()->word,
-            'description' => fake()->sentence,
-            'address' => fake()->streetAddress,
-            'city' => fake()->city,
-            'state' => fake()->state,
-            'zip' => fake()->postcode,
+            'description' => $full_address->formatted ?? fake()->address,
+            'address' => $full_address->road ?? $full_address->locality ?? fake()->streetAddress,
+            'city' => $full_address->village ?? fake()->city,
+            'state' => $full_address->state_district ?? fake()->state,
+            'zip' => $full_address->postcode ?? fake()->postcode,
             'country' => 'España',
-            'lat' => fake()->latitude($min = 37.5, $max = 43),
-            'lng' => fake()->longitude($min = -6, $max = 0),
+            'lat' => $lat,
+            'lng' => $lng,
         ];
     }
 }
