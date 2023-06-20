@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
         // Seed allergies
         (new AllergySeeder)->run();
 
-
         if (getenv('APP_ENV') ?? '' !== 'local') {
             return;
         }
