@@ -63,7 +63,7 @@ class LocationController extends Controller
 
         $location->update($data);
 
-        return redirect()->route('locations.edit')
+        return redirect()->route('locations.edit', compact('location'))
             ->with('success', sprintf(__('%s updated successfully'), __('Location')));
     }
 
