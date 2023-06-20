@@ -25,13 +25,4 @@ class Product extends Model
             ->withPivot('price', 'stock')
             ->withTimestamps();
     }
-
-    // Attributes
-    protected function name(): Attribute
-    {
-        return new Attribute(
-            get: fn($value) => ucfirst($value),
-            set: fn($value) => strtolower($value)
-        );
-    }
 }
