@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLocation;
 use App\Models\Location;
+use App\Utils\Locations;
+use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -35,9 +38,12 @@ class LocationController extends Controller
      */
     public function store(StoreLocation $request)
     {
-        Location::create($request->all());
+        $data = $this->getLocationData($request);
 
-        return redirect(route('locations.index'));
+        Location::create($data);
+
+        return  redirect()->route('locations.index')->route('locations.index')
+            ->with('success', sprintf(__('%s created successfully'), __('Location')));;
     }
 
     /**
@@ -53,9 +59,11 @@ class LocationController extends Controller
      */
     public function update(StoreLocation $request, Location $location): RedirectResponse
     {
-        $location->update($request->all());
+        $data = $this->getLocationData($request);
 
-        return redirect()->route('locations.index')
+        $location->update($data);
+
+        return redirect()->route('locations.edit')
             ->with('success', sprintf(__('%s updated successfully'), __('Location')));
     }
 
@@ -64,8 +72,62 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
-        $location->delete();
+        try {
+            $location->delete();
+            return redirect()->route('locations.index')
+                ->with('success', sprintf(__('%s deleted successfully'), __('Location')));
+        } catch (Exception $exception) {
+            return redirect()->route('locations.index')
+                ->with('error', __('You need to remove all machines associated to this location before deleting'));
+        }
+    }
 
-        return redirect(route('locations.index'));
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $client = new Client(['base_uri' => 'https://api.opencagedata.com/geocode/v1/']);
+        $response = $client->get('json', [
+            'query' => [
+                'q' => $query,
+                'key' => env('OPENCAGE_API_KEY'),
+                'language' => 'es',
+                'countrycode' => 'es'
+            ],
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+        $predictions = [];
+
+        foreach ($data['results'] as $result) {
+            $formatted = $result['formatted'];
+            $predictions[] = $formatted;
+        }
+
+        return response()->json($predictions);
+    }
+
+    /**
+     * @param  StoreLocation  $request
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function getLocationData(StoreLocation $request): array
+    {
+        $coordinates = Locations::get_lat_lng($request->location);
+        $address = Locations::get_full_address($coordinates['lat'], $coordinates['lng']);
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description,
+            'location' => $request->location,
+            'address' => $address->road ?? '',
+            'city' => $address->town ?? $address->village ?? '',
+            'state' => $address->state_district,
+            'zip' => $address->postcode,
+            'country' => $address->country,
+            'lat' => $coordinates['lat'],
+            'lng' => $coordinates['lng'],
+        ];
+        return $data;
     }
 }

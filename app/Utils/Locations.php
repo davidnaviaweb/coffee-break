@@ -42,7 +42,7 @@ class Locations
      * @return array|null
      * @throws GuzzleException
      */
-    public static function get_lat_long(string $location): ?array
+    public static function get_lat_lng(string $location): ?array
     {
         $apiKey = env('OPENCAGE_API_KEY');
         $client = new Client();
@@ -54,7 +54,7 @@ class Locations
             $latitude = $body->results[0]->geometry->lat;
             $longitude = $body->results[0]->geometry->lng;
 
-            return ['latitude' => $latitude, 'longitude' => $longitude];
+            return ['lat' => $latitude, 'lng' => $longitude];
         } else {
             return null;
         }

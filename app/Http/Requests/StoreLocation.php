@@ -24,11 +24,11 @@ class StoreLocation extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'address' => 'required',
-            'city' => 'required',
+//            'address' => 'required',
+//            'city' => 'required',
             // 'state' => 'required',
             // 'zip' => 'required',
-            'country' => 'required',
+            'location' => 'required',
             // 'lat' => 'required',
             // 'lng' => 'required',
         ];

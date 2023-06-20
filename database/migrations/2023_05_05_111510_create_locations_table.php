@@ -14,11 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip');
-            $table->string('country');
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('country')->nullable();
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->timestamps();

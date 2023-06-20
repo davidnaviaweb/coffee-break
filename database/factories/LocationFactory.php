@@ -27,12 +27,13 @@ class LocationFactory extends Factory
 
         return [
             'name' => fake()->word,
-            'description' => $full_address->formatted ?? fake()->address,
+            'description' => fake()->sentence,
+            'location' => $full_address->formatted,
             'address' => $full_address->road ?? $full_address->locality ?? fake()->streetAddress,
             'city' => $full_address->village ?? fake()->city,
             'state' => $full_address->state_district ?? fake()->state,
             'zip' => $full_address->postcode ?? fake()->postcode,
-            'country' => 'España',
+            'country' => $full_address->country,
             'lat' => $lat,
             'lng' => $lng,
         ];
