@@ -37,7 +37,7 @@ class EventController extends Controller
             case     Event::PURCHASE:
                 $machine = Machine::find($event->machine_id);
                 $product = $machine->products()->find($data->product_id);
-                echo "{$product->name} at {$product->pivot->price}";
+                echo "{$product->name} at {$product->pivot->price} €";
 
 //                $data = json_encode([
 //                    'product_id' => $product->id,
@@ -45,7 +45,7 @@ class EventController extends Controller
 //                ]);
                 break;
             case    Event::LOGIN:
-                echo "{$data->card_number}";
+                echo "Card {$data->card_number}";
 //
 //                $data = json_encode(
 //                    [
@@ -57,7 +57,7 @@ class EventController extends Controller
 //                );
                 break;
             case    Event::LOGOUT:
-                echo "{$data->card_number} on {$data->status}";
+                echo "Card {$data->card_number} on {$data->status}";
 
 //                $data = json_encode(
 //                    [
