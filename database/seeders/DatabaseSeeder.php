@@ -24,6 +24,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('demodemo')
         ]);
 
+        // Seed allergies
+        (new AllergySeeder)->run();
+
+
         if (getenv('APP_ENV') ?? '' !== 'local') {
             return;
         }
@@ -35,8 +39,7 @@ class DatabaseSeeder extends Seeder
         Location::factory(5)->create();
         Machine::factory(10)->create();
 
-        // Allergies & products
-        (new AllergySeeder)->run();
+        // Products
         (new ProductSeeder)->run();
 //        (new EventSeeder)->run();
     }
