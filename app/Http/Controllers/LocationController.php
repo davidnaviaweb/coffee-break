@@ -119,10 +119,10 @@ class LocationController extends Controller
         $data = [
             'name' => $request->name,
             'description' => $request->description,
-            'location' => $request->location,
+            'location' => $address->formatted,
             'address' => $address->road ?? '',
             'city' => $address->town ?? $address->village ?? '',
-            'state' => $address->state_district,
+            'state' => $address->state_district ?? $address->state,
             'zip' => $address->postcode,
             'country' => $address->country,
             'lat' => $coordinates['lat'],
