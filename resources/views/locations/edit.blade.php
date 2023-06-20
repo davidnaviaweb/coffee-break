@@ -36,22 +36,22 @@
                         <div class="flex-col w-full">
                             <label for="address"
                                    class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Address') }}</label>
-                            <input disabled type="text" name="address" placeholder="{{ __('Location\'s address') }}"
-                                   class="block w-full border-gray-300 cursor-not-allowed bg-gray-300 rounded-md shadow-sm"
+                            <input type="text" name="address" placeholder="{{ __('Location\'s address') }}"
+                                   class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                                    value="{{ $location->address }}"/>
                         </div>
                         <div class="flex-col w-auto">
                             <label for="city"
                                    class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('City') }}</label>
-                            <input disabled type="text" name="city"
-                                   class="block w-full border-gray-300 cursor-not-allowed bg-gray-300 rounded-md shadow-sm"
+                            <input type="text" name="city"
+                                   class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                                    value="{{ $location->city }}"/>
                         </div>
                         <div class="flex-col w-auto">
                             <label for="zip"
                                    class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('ZIP') }}</label>
-                            <input disabled type="text" name="zip"
-                                   class="block w-full border-gray-300 cursor-not-allowed bg-gray-300 rounded-md shadow-sm"
+                            <input type="text" name="zip"
+                                   class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                                    value="{{ $location->zip }}"/>
                         </div>
                         <div class="flex-col w-auto">
