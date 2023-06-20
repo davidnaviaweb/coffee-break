@@ -2,9 +2,9 @@
 
 namespace App\Utils;
 
+use App\Models\Allergy;
 use App\Models\Card;
 use App\Models\Machine;
-use App\Models\User;
 use JetBrains\PhpStorm\ArrayShape;
 
 class Events
@@ -34,10 +34,11 @@ class Events
      * @param  Machine  $machine
      * @return array
      */
-    #[ArrayShape(['products' => "array"])] public static function format_start_response(Machine $machine): array
+    #[ArrayShape(['products' => "array", 'allergies' => "array"])] public static function format_start_response(Machine $machine): array
     {
         $response = [
-            'products' => []
+            'products' => [],
+            'allergies' => Allergy::all()
         ];
 
         foreach ($machine->products as $product) {
@@ -45,7 +46,7 @@ class Events
             foreach ($product->allergies->all() as $allergy) {
                 $allergies[] = array_filter(
                     $allergy->toArray(),
-                    fn($key) => in_array($key, ['id', 'name', 'image']),
+                    fn($key) => in_array($key, ['id']),
                     ARRAY_FILTER_USE_KEY
                 );
             }
@@ -62,5 +63,4 @@ class Events
 
         return $response;
     }
-
 }
