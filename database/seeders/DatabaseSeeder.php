@@ -34,6 +34,6 @@ class DatabaseSeeder extends Seeder
         // Allergies & products
         (new AllergySeeder)->run();
         (new ProductSeeder)->run();
-        (new EventSeeder)->run();
+//        (new EventSeeder)->run();
     }
 }

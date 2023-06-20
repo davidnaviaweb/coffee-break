@@ -34,7 +34,7 @@
             @endif
 
             <!-- Page Content -->
-            <main class="dark:bg-gray-900">
+            <main class="min-h-screen dark:bg-gray-900">
                 {{ $slot }}
             </main>
         </div>

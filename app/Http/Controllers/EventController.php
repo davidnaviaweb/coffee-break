@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEvent;
 use App\Models\Event;
+use App\Models\Machine;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -31,11 +32,12 @@ class EventController extends Controller
 
     public static function format_data($event)
     {
-        $data = json_decode($event->data);
+        $data = (object) $event->data;
         switch ($event->type) {
             case     Event::PURCHASE:
-                $product = Product::find($data->product_id);
-                echo "{$product->name} at {$data->price}";
+                $machine = Machine::find($event->machine_id);
+                $product = $machine->products()->find($data->product_id);
+                echo "{$product->name} at {$product->pivot->price}";
 
 //                $data = json_encode([
 //                    'product_id' => $product->id,
@@ -43,7 +45,7 @@ class EventController extends Controller
 //                ]);
                 break;
             case    Event::LOGIN:
-                echo "{$data->card_number} with status {$data->card_status}";
+                echo "{$data->card_number}";
 //
 //                $data = json_encode(
 //                    [

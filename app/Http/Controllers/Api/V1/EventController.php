@@ -35,11 +35,32 @@ class EventController extends Controller
             }
 
             switch ($payload->type ?? '') {
-                case     Event::PURCHASE:
+                case Event::PURCHASE:
                     $machine = Machine::find($payload->machine_id);
 
-                    // Update product
+                    // Get the product
                     $product = $machine->products()->find($payload->data['product_id']);
+
+                    // Check if there is enough stock
+                    if ($product->pivot->stock === 0) {
+                        throw new Exception(__("Product {$product->name} with ID {$product->id} is not available anymore"));
+                    }
+
+                    // Use card
+                    if (isset($payload->data['card_number'])) {
+                        $card = Card::where('serial_number', '=', $payload->data['card_number'])->first();
+                        if (!is_a($card, Card::class)) {
+                            throw new Exception(__("Card with number {$payload->data['card_number']} does not exists"));
+                        }
+
+                        if ($card->balance < $product->pivot->price) {
+                            throw new Exception(__("Card with number {$payload->data['card_number']} has no enough credit (Remaining: {$card->balance}"));
+                        }
+
+                        // Withdraw money from the card
+                        $card->balance = $card->balance - $product->pivot->price;
+                        $card->save();
+                    }
 
                     // Update product
                     $machine->products()->syncWithoutDetaching([
@@ -48,14 +69,6 @@ class EventController extends Controller
                             'stock' => ($product->pivot->stock - 1)
                         ]
                     ]);
-
-                    // Withdraw money from the card
-                    $card = Card::where('serial_number', '=',$payload->data['card_number'])->first();
-                    if (!is_a($card, Card::class)) {
-                        throw new Exception(__("Card with number {$payload->data['card_number']} does not exists"));
-                    }
-                    $card->balance = $card->balance - $product->pivot->price;
-                    $card->save();
 
                     $response = Events::format_start_response($machine);
 
@@ -66,6 +79,10 @@ class EventController extends Controller
 
                     if (!is_a($card, Card::class)) {
                         throw new Exception(__("Card with number {$card_number} does not exists"));
+                    }
+
+                    if ($card->status !== Card::ACTIVE) {
+                        throw new Exception(__("Card with number {$card_number} is {$card->status}"));
                     }
 
                     $response = Events::format_login_response($card);
