@@ -81,7 +81,7 @@ class EventController extends Controller
                         throw new Exception(__("Card with number {$card_number} does not exists"));
                     }
 
-                    if ($card->status !== Card::ACTIVE) {
+                    if (strtolower($card->status) !== Card::ACTIVE) {
                         throw new Exception(__("Card with number {$card_number} is {$card->status}"));
                     }
 
