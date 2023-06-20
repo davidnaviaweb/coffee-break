@@ -24,6 +24,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('demodemo')
         ]);
 
+        if (getenv('APP_ENV') ?? '' !== 'local') {
+            return;
+        }
+
         // Cards
         Card::factory(20)->create();
 

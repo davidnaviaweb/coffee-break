@@ -40,6 +40,9 @@ Route::delete('machines/deleteProduct', [MachineController::class, 'deleteProduc
 # Machines
 Route::resource('machines', MachineController::class)->middleware(['auth', 'verified']);
 
+# Ajax call for autocomplete locations
+Route::get('/locations/search', [LocationController::class, 'search'])->name('locations.search');
+
 # Locations
 Route::resource('locations', LocationController::class)->middleware(['auth', 'verified']);
 
