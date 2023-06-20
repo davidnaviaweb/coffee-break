@@ -46,7 +46,7 @@ class Locations
     {
         $apiKey = env('OPENCAGE_API_KEY');
         $client = new Client();
-        $url = "https://api.opencagedata.com/geocode/v1/json?q=".urlencode($location)."&key=".$apiKey."&language=native&pretty=1";
+        $url = "https://api.opencagedata.com/geocode/v1/json?q=".urlencode($location)."&key=".$apiKey."&language=native&pretty=1&countrycode=es";
         $response = $client->request('GET', $url);
         $body = json_decode($response->getBody());
 
