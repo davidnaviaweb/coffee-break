@@ -15,20 +15,4 @@ class Location extends Model
     ];
     protected $guarded = [];
     protected $perPage = 10;
-
-    protected function name(): Attribute
-    {
-        return new Attribute(
-            get: fn($value) => ucfirst($value),
-            set: fn($value) => strtolower($value)
-        );
-    }
-
-    protected function description(): Attribute
-    {
-        return new Attribute(
-            get: fn($value) => ucfirst($value),
-            set: fn($value) => strtolower($value)
-        );
-    }
 }
