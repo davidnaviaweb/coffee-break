@@ -57,7 +57,7 @@ class EventController extends Controller
 //                );
                 break;
             case    Event::LOGOUT:
-                echo "{$data->card_number} with status {$data->card_status}";
+                echo "{$data->card_number}";
 
 //                $data = json_encode(
 //                    [
