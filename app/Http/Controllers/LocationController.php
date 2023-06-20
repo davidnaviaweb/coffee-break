@@ -42,7 +42,7 @@ class LocationController extends Controller
 
         Location::create($data);
 
-        return  redirect()->route('locations.index')->route('locations.index')
+        return  redirect()->route('locations.index')
             ->with('success', sprintf(__('%s created successfully'), __('Location')));;
     }
 
