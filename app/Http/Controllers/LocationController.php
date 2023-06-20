@@ -57,9 +57,14 @@ class LocationController extends Controller
     /**
      * Update a location.
      */
-    public function update(StoreLocation $request, Location $location): RedirectResponse
+    public function update(Request $request, Location $location): RedirectResponse
     {
-        $data = $this->getLocationData($request);
+        if (isset($request->location)) {
+            $data = $this->getLocationData($request);
+        }else{
+            $data = $request->all();
+            $data['location'] = $location->location;
+        }
 
         $location->update($data);
 
@@ -108,11 +113,10 @@ class LocationController extends Controller
     }
 
     /**
-     * @param  StoreLocation  $request
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    private function getLocationData(StoreLocation $request): array
+    private function getLocationData( $request): array
     {
         $coordinates = Locations::get_lat_lng($request->location);
         $address = Locations::get_full_address($coordinates['lat'], $coordinates['lng']);
