@@ -121,7 +121,7 @@ class LocationController extends Controller
             'description' => $request->description,
             'location' => $address->formatted,
             'address' => $address->road ?? '',
-            'city' => $address->town ?? $address->village ?? '',
+            'city' => $address->city ?? $address->town ?? $address->village ?? '',
             'state' => $address->state_district ?? $address->state,
             'zip' => $address->postcode,
             'country' => $address->country,
