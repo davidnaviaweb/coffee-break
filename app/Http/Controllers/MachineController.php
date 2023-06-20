@@ -21,10 +21,10 @@ class MachineController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('machines.index', [
-            'machines' => Machine::orderBy('updated_at', 'desc')->paginate(),
-            'locations' => Location::all()
-        ]);
+        $machines = Machine::orderBy('updated_at', 'desc')->paginate();
+        $locations = Location::all();
+
+        return view('machines.index', compact('machines', 'locations'));
     }
 
     /**
@@ -34,7 +34,11 @@ class MachineController extends Controller
     {
         Machine::create($request->all());
 
-        return redirect(route('machines.index'));
+        $machines = Machine::orderBy('updated_at', 'desc')->paginate();
+        $locations = Location::all();
+
+        return redirect()->route('machines.index', compact('machines', 'locations')
+        )->with('success', sprintf(__('%s updated successfully'), __('Machine')));
     }
 
     /**

@@ -14,7 +14,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <h4 class="text-gray-800 dark:text-gray-200 mb-4">{{ __('Edit location') }}</h4>
+                <h4 class="text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Edit location') }}</h4>
                 <form method="POST" action="{{ route('locations.update', $location->id) }}">
                     @csrf
                     @method('PUT')
@@ -40,21 +40,21 @@
                                    class="block w-full border-gray-300 cursor-not-allowed bg-gray-300 rounded-md shadow-sm"
                                    value="{{ $location->address }}"/>
                         </div>
-                        <div class="flex-col w-full">
+                        <div class="flex-col w-auto">
                             <label for="city"
                                    class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('City') }}</label>
                             <input disabled type="text" name="city"
                                    class="block w-full border-gray-300 cursor-not-allowed bg-gray-300 rounded-md shadow-sm"
                                    value="{{ $location->city }}"/>
                         </div>
-                        <div class="flex-col w-full">
+                        <div class="flex-col w-auto">
                             <label for="zip"
                                    class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('ZIP') }}</label>
                             <input disabled type="text" name="zip"
                                    class="block w-full border-gray-300 cursor-not-allowed bg-gray-300 rounded-md shadow-sm"
                                    value="{{ $location->zip }}"/>
                         </div>
-                        <div class="flex-col w-full">
+                        <div class="flex-col w-auto">
                             <label for="country"
                                    class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Country') }}</label>
                             <input disabled type="text" name="country"

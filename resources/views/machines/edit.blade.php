@@ -1,9 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="inline-flex font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <a class="inline-flex text-blue-600 dark:text-blue-500 hover:text-blue-700 dark:hover:text-blue-700" href="{{route('machines.index')}}">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            <a class="inline-flex text-blue-600 dark:text-blue-500 hover:text-blue-700 dark:hover:text-blue-700"
+               href="{{route('machines.index')}}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
                 </svg>
                 <span class="ml-2">{{sprintf(__('Back to %s'), __('machines')) }} </span>
             </a>
@@ -16,16 +18,22 @@
                 <h4 class="text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Edit machine') }}</h4>
                 <form method="POST" action="{{ route('machines.update', $machine->id) }}">
                     @method('PUT')
+                    <label for="name"
+                           class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Name') }}</label>
                     <input type="text" name="name" placeholder="{{ __('Machine\'s name') }}"
                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                            value="{{ old('name', $machine->name) }}"/>
                     <x-input-error :messages="$errors->get('name')" class="mt-2"/>
                     <br>
+                    <label for="description"
+                           class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Description') }}</label>
                     <input type="text" name="description" placeholder="{{ __('Machine\'s description') }}"
                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                            value="{{ old('description', $machine->description) }}"/>
                     <x-input-error :messages="$errors->get('description')" class="mt-2"/>
                     <br>
+                    <label for="location_id"
+                           class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Location') }}</label>
                     <select name="location_id"
                             class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                         <option value="">{{__('Select a location')}}</option>
@@ -42,7 +50,7 @@
                     <h4 class="text-lg text-gray-800 dark:text-gray-200 mb-4">{{__('Add product')}}</h4>
                     @include('machines.partials.add-product-form')
                     <hr class="mb-10">
-                    <h4 class="text-gray-800 dark:text-gray-200 mb-">{{__('Products in this machine')}}</h4>
+                    <h4 class="text-lg text-gray-800 dark:text-gray-200 mb-">{{__('Products in this machine')}}</h4>
                     <x-index-table id="machine-products-table">
                         @include('machines.partials.machine-products-table')
                     </x-index-table>

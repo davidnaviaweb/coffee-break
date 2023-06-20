@@ -14,7 +14,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <x-notification-success :message="session('success') ?? ''"></x-notification-success>
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <h4 class="text-gray-800 dark:text-gray-200 mb-4">{{ __('Edit product') }}</h4>
+                <h4 class="text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Edit product') }}</h4>
                 <form method="POST" action="{{ route('products.update', $product->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')

@@ -9,7 +9,7 @@
             <x-notification-success :message="session('success') ?? ''"></x-notification-success>
             <x-notification-error :message="session('error') ?? ''"></x-notification-error>
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <h4 class="text-gray-800 dark:text-gray-200 mb-4">{{ __('Create new location') }}</h4>
+                <h4 class="text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Create new location') }}</h4>
                 <form method="POST" action="{{ route('locations.store') }}">
                     @csrf
                     <label for="name"

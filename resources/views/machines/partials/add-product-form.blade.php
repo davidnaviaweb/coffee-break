@@ -30,7 +30,7 @@
                min="0"/>
         <p class="mt-2 text-red-500 italic"></p>
     </div>
-    <x-action-button class="add-new-product" type="submit" class="mt-8 disabled:bg-gray-300">
+    <x-action-button class="add-new-product" type="submit" class="mt-8 disabled:bg-gray-300 flex-shrink-0 h-10">
         {{ __('Add product') }}
     </x-action-button>
 </form>
