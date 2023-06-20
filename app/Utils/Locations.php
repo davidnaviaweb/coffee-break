@@ -19,7 +19,7 @@ class Locations
     public static function get_full_address($lat, $long): mixed
     {
         $client = new Client();
-        $url = "https://api.opencagedata.com/geocode/v1/json?q=".urlencode($lat.','.$long)."&key=".env('OPENCAGE_API_KEY')."&language=native&pretty=1";
+        $url = "https://api.opencagedata.com/geocode/v1/json?q=".urlencode($lat.','.$long)."&key=".env('OPENCAGE_API_KEY')."&language=es&pretty=1";
         $response = $client->request('GET', $url);
         $body = json_decode($response->getBody());
 
