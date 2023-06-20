@@ -57,8 +57,8 @@
                         <div class="flex-col w-auto">
                             <label for="country"
                                    class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Country') }}</label>
-                            <input disabled type="text" name="country"
-                                   class="block w-full border-gray-300 cursor-not-allowed bg-gray-300 rounded-md shadow-sm"
+                            <input type="text" name="country"
+                                   class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                                    value="{{ $location->country }}"/>
                         </div>
                     </div>
