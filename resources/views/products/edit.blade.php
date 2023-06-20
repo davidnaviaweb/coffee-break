@@ -12,6 +12,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <x-notification-success :message="session('success') ?? ''"></x-notification-success>
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <h4 class="text-gray-800 dark:text-gray-200 mb-4">{{ __('Edit product') }}</h4>
                 <form method="POST" action="{{ route('products.update', $product->id) }}" enctype="multipart/form-data">
@@ -19,27 +20,45 @@
                     @method('PUT')
                     <div class="flex align-items-start">
                         <img class="fill-current text-gray-500 mr-2 w-20 h-20 rounded-full shadow-xl"
-                             src="{{url($product->image)}}">
+                             src="{{url($product->image ?? '')}}">
                         <div class="w-full ml-4">
+                            <label for="name"
+                                   class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Name') }}</label>
                             <input type="text" name="name" placeholder="{{ __('Product\'s name') }}"
                                    class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                                    value="{{ old('name', $product->name) }}"/>
                             <x-input-error :messages="$errors->get('name')" class="mt-2"/>
                             <br>
+                            <label for="image"
+                                   class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Image') }}</label>
                             <input type="file" name="image"
                                    class="text-gray-800 dark:text-gray-200 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                                    accept=".jpg,.png"
                             />
                             <x-input-error :messages="$errors->get('image')" class="mt-2"/>
                             <br>
-                            <select name="allergies[]" multiple
-                                    class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <label for="allergies[]"
+                                   class="inline-block text-gray-800 dark:text-gray-200 mb-4">{{ __('Allergies/Intolerances') }}</label>
+                            <div class="grid grid-cols-7 w-full">
+                                <style>
+                                    .allergy input:checked + div {
+                                        --tw-bg-opacity: 1;
+                                        background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+                                    }
+                                </style>
                                 @foreach($allergies as $allergy)
-                                    <option value="{{$allergy->id}}"
-                                            @if (in_array($allergy->id, $product->allergies)) selected @endif>{{ $allergy->name }}</option>
+                                    <label class="allergy flex items-center text-gray-800 dark:text-gray-200 mb-4 cursor-pointer">
+                                        <input class="absolute ml-6" type="checkbox" name="allergies[]"
+                                               value="{{$allergy->id}}"
+                                               @if (in_array($allergy->id, $product->allergies)) checked @endif>
+                                        <div class="z-50 flex items-center p-2 rounded-md w-full mr-4 transition-all duration-100 ease-out">
+                                            <img class="mr-3 rounded-full w-10 h-10 bg-gray-200 border-gray-300"
+                                                 src="{{$allergy->image}}"
+                                                 title="{{ $allergy->name }}"/> {{ $allergy->name }}
+                                        </div>
+                                    </label>
                                 @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('allergies')" class="mt-2"/>
+                            </div>
                             <x-primary-button class="mt-4">{{ __('Update') }}</x-primary-button>
                         </div>
                     </div>

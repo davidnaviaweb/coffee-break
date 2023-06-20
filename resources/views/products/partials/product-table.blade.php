@@ -1,6 +1,6 @@
 <x-slot name="header">
     <tr>
-        @foreach(['' => 'left','Name'=>'left','Allergies' => 'center', 'Actions' => 'right'] as $label => $text_align)
+        @foreach(['ID' => 'left', '' => 'left','Name'=>'left','Allergies' => 'center', 'Actions' => 'right'] as $label => $text_align)
             <x-index-table-th>
                 <x-slot name="label">{{$label}}</x-slot>
                 <x-slot name="text_align">{{$text_align}}</x-slot>
@@ -11,6 +11,9 @@
 <x-slot name="body">
     @foreach($products as $product)
         <tr>
+            <td class="border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-left">
+                {{$product->id}}
+            </td>
             <td class="w-20 border-b dark:border-slate-600 font-normal p-4 text-slate-400 dark:text-slate-200 text-center">
                 <div class="flex justify-center">
                     <img class="fill-current text-gray-500 mr-2 w-10 h-10 rounded-full shadow-xl"

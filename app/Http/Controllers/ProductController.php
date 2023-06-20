@@ -32,7 +32,18 @@ class ProductController extends Controller
     {
         $product = Product::create($request->all());
 
-        return $this->update($request, $product);
+        // Image handler
+        $url = $this->saveImage($request);
+        $product->image = $url ?: $product->image;
+        $product->save();
+
+        // Allergies
+        $allergies = Allergy::all();
+        $product->allergies()->sync($request->allergies);
+        $product->allergies = $this->getAllergiesIds($product);
+
+        return redirect()->route('products.index', compact('product', 'allergies'))
+            ->with('success', sprintf(__('%s created successfully'), __('Product')));
     }
 
     /**
@@ -59,10 +70,11 @@ class ProductController extends Controller
         $product->save();
 
         // Allergies
+        $allergies = Allergy::all();
         $product->allergies()->sync($request->allergies);
         $product->allergies = $this->getAllergiesIds($product);
 
-        return redirect()->route('products.index')
+        return redirect()->route('products.edit', compact('product', 'allergies'))
             ->with('success', sprintf(__('%s updated successfully'), __('Product')));
     }
 

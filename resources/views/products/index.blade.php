@@ -11,23 +11,42 @@
                 <h4 class="text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Create new product') }}</h4>
                 <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
                     @csrf
+                    <label for="name"
+                           class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Name') }}</label>
                     <input type="text" name="name" placeholder="{{ __('Product\'s name') }}"
                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                            value="{{ old('name') }}"/>
                     <x-input-error :messages="$errors->get('name')" class="mt-2"/>
                     <br>
+                    <label for="image"
+                           class="inline-block text-gray-800 dark:text-gray-200 mb-2">{{ __('Image') }}</label>
                     <input type="file" name="image"
                            class="block w-full text-gray-800 dark:text-gray-200 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                            accept="image/*"
                     />
                     <x-input-error :messages="$errors->get('image')" class="mt-2"/>
                     <br>
-                    <select name="allergies[]" multiple
-                            class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                    <label for="allergies[]"
+                           class="inline-block text-gray-800 dark:text-gray-200 mb-4">{{ __('Allergies/Intolerances') }}</label>
+                    <div class="grid grid-cols-7 w-full">
+                        <style>
+                            .allergy input:checked + div {
+                                --tw-bg-opacity: 1;
+                                background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+                            }
+                        </style>
                         @foreach($allergies as $allergy)
-                            <option value="{{$allergy->id}}">{{ $allergy->name }}</option>
+                            <label class="allergy flex items-center text-gray-800 dark:text-gray-200 mb-4 cursor-pointer">
+                                <input class="absolute ml-6" type="checkbox" name="allergies[]"
+                                       value="{{$allergy->id}}">
+                                <div class="z-50 flex items-center p-2 rounded-md w-full mr-4 transition-all duration-100 ease-out">
+                                    <img class="mr-3 rounded-full w-10 h-10 bg-gray-200 border-gray-300"
+                                         src="{{$allergy->image}}"
+                                         title="{{ $allergy->name }}"/> {{ $allergy->name }}
+                                </div>
+                            </label>
                         @endforeach
-                    </select>
+                    </div>
                     <x-primary-button class="mt-4">{{ __('Create') }}</x-primary-button>
                 </form>
             </div>
